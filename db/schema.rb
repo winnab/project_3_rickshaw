@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131212180027) do
+ActiveRecord::Schema.define(:version => 20131213132624) do
 
   create_table "drivers", :force => true do |t|
     t.string   "username"
@@ -21,9 +21,10 @@ ActiveRecord::Schema.define(:version => 20131212180027) do
 
   create_table "locations", :force => true do |t|
     t.integer  "driver_id"
-    t.decimal  "latitude",            :precision => 10, :scale => 6
-    t.decimal  "longitude",           :precision => 10, :scale => 6
-    t.datetime "location_updated_at"
+    t.decimal  "latitude",  :precision => 10, :scale => 6
+    t.decimal  "longitude", :precision => 10, :scale => 6
+    t.datetime "client_ts"
+    t.datetime "server_ts"
   end
 
   create_table "stops", :force => true do |t|
