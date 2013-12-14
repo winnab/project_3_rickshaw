@@ -7,6 +7,8 @@ gem 'jquery-rails'
 
 gem 'pg'
 
+gem 'active_model_serializers'
+
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
   gem 'coffee-rails', '~> 3.2.1'
@@ -22,4 +24,6 @@ group :development, :test do
   gem 'capybara'
   gem 'factory_girl_rails'
   gem 'faker'
+  gem 'binding_of_caller'
+  gem 'meta_request'  
 end
