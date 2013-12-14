@@ -1,3 +1,33 @@
-stops index test
+.col-md-4
+	%h1 Drivers and Stops
+	%table
+		%tbody
+			- @stops.each do |stop|
+				%tr
+					%td{colspan: "2"} 
+						%h2=stop.driver.username
+				%tr
+					%td{style: "vertical-align: top;"} 
+						%h5="#{stop.stop_type}, #{stop.status}"
+					%td
+						%h3=stop.stop_contact_name				
+						%h4=stop.client_name
+						%h5=stop.foreign_id
+						%h5=stop.address
+						%h5=stop.scheduled_time
 
-%p=@stops
+.col-md-8
+	%h1 Thoughts and To Do
+	%ul
+		%li show all stops for each driver
+		%li differentiate between active and non-active drivers (I'm online! etc)
+		%li show stop number (caculated by scheduled_time)
+		%li show up or down arrow icon for stop_type
+		%li if stops change for driver, update list
+		%li show drivers by active versus not
+		%li show checkmark or nothing for status
+
+	%h3 Could do
+	%ul
+		%li link location so onClick goes to spot on map (would need to parse latlng)?
+
