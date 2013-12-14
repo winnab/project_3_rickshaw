@@ -2,9 +2,9 @@ class DriverSerializer < ActiveModel::Serializer
   attributes :id, :username
 	
 	has_many :stops
-  
-  has_many :locations
+  embed :ids, include: true
 
-  
-  # sideload locations?
+  has_many :locations
+	embed :ids, include: true  
+	
 end
