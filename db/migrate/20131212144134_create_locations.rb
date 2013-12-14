@@ -1,9 +1,11 @@
 class CreateLocations < ActiveRecord::Migration
   def up
   	create_table 	:locations do |t|
-      t.integer   :driver_id  		
-      t.float			:latitude, 	:precision=>10, :scale=>6
-  		t.float 		:longitude, :precision=>10, :scale=>6
+      t.belongs_to   :driver  		
+      t.decimal      :latitude, :precision=>10, :scale=>6
+      t.decimal      :longitude, :precision=>10, :scale=>6
+      t.datetime     :server_ts
+      t.datetime     :client_ts
   	end
   end
 
