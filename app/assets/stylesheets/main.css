@@ -117,6 +117,15 @@ textarea {
    Helper classes
    ========================================================================== */
 
+
+.go-left{
+    float: left;
+}
+
+.go-right{
+    float: right;
+}
+
 /*
  * Image replacement
  */
@@ -302,6 +311,8 @@ textarea {
         page-break-after: avoid;
     }
 }
+
+/******** map *********************************************************************************************************/
 
 html { height: 100% }
 body { height: 100%; margin: 0; padding: 0 }

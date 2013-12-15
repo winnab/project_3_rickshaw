@@ -3,13 +3,14 @@ class StopSerializer < ActiveModel::Serializer
   						:route_order_index, :status, :stop_contact_name, :scheduled_time,
   						:driver_id
 
-
 	has_one :driver  					
 
 	# convert timestamp
 	# display driver username
 	# calculate route_order_index
 	# parse status from the full status sent by rickshaw
+	# client name upcased
+
 
 
 end

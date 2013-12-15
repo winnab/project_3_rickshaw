@@ -1,0 +1,28 @@
+.route-nav {
+	background-color: grey;
+}
+
+.route-nav table, tr, td {
+		border: 1px solid white;
+	}
+
+.route-nav h1, h2, h3, h4, h5, h6 {
+		padding: 0;
+		margin: 0;
+	}x
+
+.route-icons td {
+	vertical-align: top;
+}
+
+.route-icons .stop-number{
+	background-color: blue;
+}
+
+.route-icons .stop-type {
+	background-color: red;
+}
+
+.route-icons .stop-status {
+	background-color: orange;
+}
