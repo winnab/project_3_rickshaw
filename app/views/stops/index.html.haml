@@ -1,17 +1,22 @@
-.col-md-4
+.route-nav.col-md-4
 	%h1 Drivers and Stops
 	%table
 		%tbody
 			- @stops.each do |stop|
 				%tr
 					%td{colspan: "2"} 
-						%h2=stop.driver.username
+						%h2=stop.driver_name
 				%tr
-					%td{style: "vertical-align: top;"} 
-						%h5="#{stop.stop_type}, #{stop.status}"
+					%td.route-icons
+						.stop-number.go-left 
+							stop
+							%br
+							number
+						.stop-type.go-left= stop.stop_type
+						.stop-status.go-right= stop.status
 					%td
 						%h3=stop.stop_contact_name				
-						%h4=stop.client_name
+						%h4=stop.client
 						%h5=stop.foreign_id
 						%h5=stop.address
 						%h5=stop.scheduled_time
