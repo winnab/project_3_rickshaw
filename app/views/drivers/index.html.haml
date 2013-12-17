@@ -1,3 +1,7 @@
 drivers index test
 
-%p=@drivers
+
+- @drivers.each do |f|
+	%p=f.username
+	- f.stops.each do |s|
+		%p=stop

@@ -29,6 +29,11 @@ html {
  * Customize the background color to match your design.
  */
 
+.row {
+    padding: 0;
+    margin: 0;
+}
+
 ::-moz-selection {
     background: #b3d4fc;
     text-shadow: none;
@@ -97,7 +102,13 @@ textarea {
    Author's custom styles
    ========================================================================== */
 
+.clear-padding {
+  padding: 0;
+}
 
+.space-above {
+  padding: 10px 0 0 0;    
+}
 
 
 
@@ -312,10 +323,14 @@ textarea {
     }
 }
 
-/******** map *********************************************************************************************************/
+/******** map ******************************************************************/
 
-html { height: 100% }
-body { height: 100%; margin: 0; padding: 0 }
+
+/*html { height: 100% }*/
+/*body { height: 100%; margin: 0; padding: 0 }*/
 #map-canvas { height: 100% }
-    
 
+    
+#logo {
+    padding: 10px 0 20px 0;
+}
