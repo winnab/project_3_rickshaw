@@ -1,7 +1,7 @@
 class LocationSerializer < ActiveModel::Serializer
-  attributes 	:id, :driver_id, :latitude, :longitude, :client_ts, :server_ts
+  attributes  :id, :driver_id, :lat, :lng, :rickshaw_server_ts
 
-  has_one :driver
+  # has_one :driver
 
 	# convert timestamp
 	# display driver username
