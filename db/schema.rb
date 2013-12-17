@@ -21,27 +21,30 @@ ActiveRecord::Schema.define(:version => 20131212144919) do
 
   create_table "locations", :force => true do |t|
     t.integer  "driver_id"
-    t.decimal  "latitude",  :precision => 10, :scale => 6
-    t.decimal  "longitude", :precision => 10, :scale => 6
-    t.datetime "server_ts"
-    t.datetime "client_ts"
+    t.decimal  "lat",                :precision => 10, :scale => 6
+    t.decimal  "lng",                :precision => 10, :scale => 6
+    t.datetime "rickshaw_server_ts"
+    t.datetime "created_at",                                        :null => false
+    t.datetime "updated_at",                                        :null => false
   end
 
   create_table "stops", :force => true do |t|
     t.integer  "driver_id"
-    t.string   "stop_contact_name"
-    t.string   "client_name"
-    t.integer  "foreign_id"
-    t.string   "stop_type"
-    t.string   "address"
-    t.decimal  "latitude",          :precision => 10, :scale => 6
-    t.decimal  "longitude",         :precision => 10, :scale => 6
-    t.integer  "route_order_index"
-    t.string   "status"
-    t.datetime "scheduled_time"
+    t.string   "job_status"
+    t.string   "scheduled_status"
+    t.datetime "scheduled_datetime"
     t.datetime "scheduled_date"
-    t.datetime "created_at",                                       :null => false
-    t.datetime "updated_at",                                       :null => false
+    t.datetime "scheduled_day"
+    t.datetime "scheduled_time"
+    t.string   "stop_contact_name"
+    t.string   "stop_address"
+    t.string   "client_name"
+    t.string   "stop_type"
+    t.string   "rickshaw_foreign_id"
+    t.decimal  "lat",                 :precision => 10, :scale => 6
+    t.decimal  "lng",                 :precision => 10, :scale => 6
+    t.datetime "created_at",                                         :null => false
+    t.datetime "updated_at",                                         :null => false
   end
 
 end

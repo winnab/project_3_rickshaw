@@ -1,5 +1,5 @@
 class Location < ActiveRecord::Base
-	attr_accessible :id, :driver_id, :latitude, :longitude, :client_ts, :server_ts
+	attr_accessible :id, :driver_id, :lat, :lng, :rickshaw_server_ts
 	belongs_to :driver
 
 	# update :latitude and :longitude so that it's :lat :lng

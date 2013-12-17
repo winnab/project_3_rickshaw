@@ -1,9 +1,9 @@
 class StopSerializer < ActiveModel::Serializer
-  attributes 	:id, :client_name, :foreign_id, :stop_type, :address, 
-  						:route_order_index, :status, :stop_contact_name, :scheduled_time,
-  						:driver_id
+  attributes 	:id, :driver_id, :job_status, :scheduled_status, :scheduled_datetime, 
+  						:scheduled_date, :scheduled_day, :scheduled_time, :stop_contact_name, 
+  						:stop_address, :client_name, :stop_type, :rickshaw_foreign_id
 
-	has_one :driver  					
+	# has_one :driver  					
 
 	# convert timestamp
 	# display driver username
