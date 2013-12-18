@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131212144919) do
+ActiveRecord::Schema.define(:version => 20131218114725) do
 
   create_table "drivers", :force => true do |t|
     t.string   "username"
@@ -33,18 +33,15 @@ ActiveRecord::Schema.define(:version => 20131212144919) do
     t.string   "job_status"
     t.string   "scheduled_status"
     t.datetime "scheduled_datetime"
-    t.datetime "scheduled_date"
-    t.datetime "scheduled_day"
-    t.datetime "scheduled_time"
     t.string   "stop_contact_name"
     t.string   "stop_address"
     t.string   "client_name"
     t.string   "stop_type"
     t.string   "rickshaw_foreign_id"
-    t.decimal  "lat",                 :precision => 10, :scale => 6
-    t.decimal  "lng",                 :precision => 10, :scale => 6
-    t.datetime "created_at",                                         :null => false
-    t.datetime "updated_at",                                         :null => false
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
+    t.float    "latitude"
+    t.float    "longitude"
   end
 
 end

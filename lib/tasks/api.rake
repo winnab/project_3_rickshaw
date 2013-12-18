@@ -16,27 +16,27 @@ namespace :api do
 
 			def convert_username_to_id record
 				driver_username 	= record["driver_username"]
-				driver 						= Driver.find(username: driver_username)
-				driver.save!
+				driver 						= Driver.find_or_create_by_username(driver_username)
+				driver.id
 			end
 			
 			data_stop_loc.each do |record|
-				stop = Stop.new(
+				status = record["status"].split(" ")
+
+				stop = Stop.create!(
 					driver_id: 						convert_username_to_id(record),
-					status: 							record["status"].split(" "),
 					job_status: 					status[0],
-					scheduled_status: 		status[1],
+					# scheduled_status: 		status[1],
 					scheduled_datetime: 	Time.at(record["scheduled_time"]).to_datetime,
-					scheduled_date: 			Time.at(record["scheduled_time"]).strftime("%m/%d/%Y"),
-					scheduled_day: 				Time.at(record["scheduled_time"]).strftime("%A"),
-					scheduled_time: 			Time.at(record["scheduled_time"]).strftime("%H:%M:%S"),
+					# scheduled_date: 			Time.at(record["scheduled_time"]).strftime("%m/%d/%Y"),
+					# scheduled_day: 				Time.at(record["scheduled_time"]).strftime("%A"),
+					# scheduled_time: 			Time.at(record["scheduled_time"]).strftime("%H:%M:%S"),
 					stop_contact_name: 		record["stop_contact_name"],
 					stop_address: 				record["address"],
 					client_name: 					record["client_name"].capitalize,
 					stop_type: 						record["type"],
 					rickshaw_foreign_id:	record["foreign_id"],
 				)
-				stop.save!
 			end
 		end
 
@@ -44,6 +44,8 @@ namespace :api do
   	task :get_driver_location_data => :environment do
 			
 			url 					= "https://gorickshaw.com/location_history"
+						binding.pry
+
 			request_body 	= open(url, :http_basic_authentication=>[ENV["RICKSHAW_KEY"], ENV["RICKSHAW_PASS"]]).read
 			data_stop_loc = JSON.parse request_body
 			

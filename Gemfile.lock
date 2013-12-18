@@ -64,6 +64,7 @@ GEM
       railties (>= 3.0.0)
     faker (1.2.0)
       i18n (~> 0.5)
+    geocoder (1.1.9)
     haml (4.0.4)
       tilt
     haml-rails (0.4)
@@ -71,6 +72,11 @@ GEM
       activesupport (>= 3.1, < 4.1)
       haml (>= 3.1, < 4.1)
       railties (>= 3.1, < 4.1)
+    hamlbars (2.0.1)
+      execjs (>= 1.2)
+      haml
+      sprockets
+      tilt
     handlebars_assets (0.15)
       execjs (>= 1.2.9)
       multi_json
@@ -183,7 +189,9 @@ DEPENDENCIES
   database_cleaner
   factory_girl_rails
   faker
+  geocoder
   haml-rails
+  hamlbars (~> 2.0)
   handlebars_assets
   jquery-rails
   meta_request

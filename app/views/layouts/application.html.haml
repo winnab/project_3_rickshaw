@@ -3,11 +3,39 @@
   %head
     %title Rickshaw Driver Dashboard
     = stylesheet_link_tag    "application", :media => "all"
-    %script{src: "https://maps.googleapis.com/maps/api/js?key=AIzaSyADuhmURB0to7p_wcihExmjqVolRbUZ96k&sensor=true", type: "text/javascript"}
+    %script{src: "https://maps.googleapis.com/maps/api/js?key=AIzaSyADuhmURB0to7p_wcihExmjqVolRbUZ96k&sensor=false", type: "text/javascript"}
     = javascript_include_tag "application"
     = javascript_include_tag "http://cdnjs.cloudflare.com/ajax/libs/showdown/0.3.1/showdown.min.js"
-    = javascript_include_tag "http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.1.0/moment.min.js"    
+    = javascript_include_tag "http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.1.0/moment.min.js" 
     = csrf_meta_tags
     %meta{content: "initial-scale=1.0, user-scalable=no", name: "viewport"}/
+  
   %body
-    = yield
+    %script#driver_route{type: "text/x-handlebars-template"}
+      :plain
+        <div id='collapsed_driver_{{id}}_stops' class="driver-name-box">
+            <h2 class="driver-name" data-id="{{id}}">{{username}}</h2> 
+        </div>
+    %script#driver_stops{type: "text/x-handlebars-template"}
+      :plain      
+          <div id='expanded_driver_stop{{id}}' class='row stop-info-box {{#if is_done}}done{{/if}}' >
+            <div class='col-md-3'>
+              <div class='route-icons stop-number'> {{index}} </div>
+              <div class='route-icons {{#if is_pickup}}pickup{{else}}dropoff{{/if}}'></div>
+              <div class='route-icons {{#if is_done}}checkmark{{/if}}'></div>
+            </div>
+            <div class='col-md-9 route-nav-text'>
+              <h3>{{stop_contact_name}}</h3>
+              <p class='details'>{{stop_address}}</p>
+              <p class='details'>client: {{client_name}}{{#if human_time}}, sched: {{human_time}}{{/if}}</p>
+            </div>
+          </div>
+    .col-md-3.left-nav
+      #logo
+        = image_tag("logo.png")
+      #stops-list.route-nav
+        #active-drivers
+        #inactive-drivers.done
+    .col-md-9
+      #map-canvas
+        

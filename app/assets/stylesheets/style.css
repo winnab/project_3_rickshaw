@@ -19,8 +19,18 @@ textarea {
 }
 
 html {
-    font-size: 1em;
-    line-height: 1.4;
+  font-size: 1em;
+  line-height: 1.4;
+  height: 100%;
+  margin: 0;
+  padding: 0; 
+}
+
+body { 
+  height: 100%;  
+  margin: 0;
+  padding: 0;
+  color: #3B3B46;
 }
 
 /*
@@ -28,11 +38,6 @@ html {
  * These selection rule sets have to be separate.
  * Customize the background color to match your design.
  */
-
-.row {
-    padding: 0;
-    margin: 0;
-}
 
 ::-moz-selection {
     background: #b3d4fc;
@@ -102,32 +107,14 @@ textarea {
    Author's custom styles
    ========================================================================== */
 
-.clear-padding {
+#logo {
+    padding: 10px 0 20px 0;
+}
+
+.row {
+  margin: 0;
   padding: 0;
 }
-
-.space-above {
-  padding: 10px 0 0 0;    
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* ==========================================================================
-   Helper classes
-   ========================================================================== */
-
 
 .go-left{
     float: left;
@@ -136,6 +123,100 @@ textarea {
 .go-right{
     float: right;
 }
+
+/*** map ******************************************/
+
+#map-canvas { 
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.col-md-9 {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+    
+
+
+/*** left nav ******************************************/
+
+.col-md-3{
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.left-nav{
+  overflow: scroll;
+}
+
+#stops-list {
+  margin: 0 25px 25px;
+}
+
+.route-nav-text h1, h2, h3, h4, h5, h6, p {
+  padding: 0;
+  margin: 0;
+  line-height: 1.5em;
+}
+
+.driver-name-box{
+  margin-top: 15px;
+}
+
+.done{
+  opacity: 0.5;
+}
+
+.route-icons {
+  background-size: 15px 15px;
+  background-repeat:no-repeat;
+  background-position:center; 
+  border-bottom: 4px solid #3B3B46; 
+  color: #3B3B46;
+  text-align: center;
+  width: 20px;
+  height:25px;
+  margin: 2px 3px 0 0;
+  padding: 5px;
+  float: left;
+}
+
+.stop-number {
+  min-width: 20px;
+  font-size: 15px;
+  line-height: 10px;
+  font-weight: bold;
+}
+
+.pickup {
+  background-image: url('pickup.png');
+}
+
+.dropoff {
+  background-image: url('dropoff.png');
+}
+
+.checkmark {
+  background-image: url('checkmark.png');
+}
+
+.stop-info-box {
+  margin-top: 10px;
+}
+
+.route-nav .details {
+  font-style: oblique;
+  padding-right: 15px;
+}
+
+
+/* ==========================================================================
+   Helper classes
+   ========================================================================== */
 
 /*
  * Image replacement
@@ -323,14 +404,4 @@ textarea {
     }
 }
 
-/******** map ******************************************************************/
 
-
-/*html { height: 100% }*/
-/*body { height: 100%; margin: 0; padding: 0 }*/
-#map-canvas { height: 100% }
-
-    
-#logo {
-    padding: 10px 0 20px 0;
-}

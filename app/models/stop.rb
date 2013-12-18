@@ -1,8 +1,9 @@
 class Stop < ActiveRecord::Base
-	attr_accessible :id, :driver_id, :job_status, :scheduled_status, :scheduled_datetime, 
-									:scheduled_date, :scheduled_day, :scheduled_time, :stop_contact_name, 
-									:stop_address, :client_name, :stop_type, :rickshaw_foreign_id
+	attr_accessible :id, :driver_id, :job_status, :scheduled_datetime, :stop_contact_name, 
+									:client_name, :stop_type, :rickshaw_foreign_id, :stop_address, :latitude, :longitude
 
+	geocoded_by :stop_address
+	after_validation :geocode # auto-fetch coordinates								
 	belongs_to :driver
 
 	def today_stop_list
