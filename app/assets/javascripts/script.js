@@ -22,9 +22,9 @@ function initRoutesList(){
 
 function initMap(){
   var mapOptions = {
-      zoom: 15,
-      center: new google.maps.LatLng(37.771947, -122.424438),
-  }
+    zoom: 15,
+    center: new google.maps.LatLng(37.771947, -122.424438),
+  };
   bounds = new google.maps.LatLngBounds();
   map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
   // getMapIconImage(map, marker);
@@ -66,7 +66,7 @@ function renderDriversList(data){
 		renderDriverStopsMap(displayed_driver);
 	}
 	$('.driver-name-box').on("click", function(){
-		$('.stop-info-box').hide();
+		$('.stop-info-box').hide(600);
 		clearMarkers();
 		var id = parseInt($(this).attr('id').replace( /\D+/g, ''));
 		var driver = _.findWhere(data.drivers, {id: id});
@@ -147,7 +147,7 @@ function getStopStatusIcon(index, stop){
 
 // info window
 
-// function getMapIconImage(map, marker){
+// function infoWindow(map, marker){
 // var contentString = '<div id="content">'+
 //       '<div id="siteNotice">'+
 //       '</div>'+
