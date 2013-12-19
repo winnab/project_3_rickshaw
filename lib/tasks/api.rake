@@ -1,3 +1,19 @@
+# {\"username\": \"winna\", 
+# 	\"lat\": 51.5223939, 
+# 	\"lng\": -0.1096558, 
+# 	\"server_ts\": 1387462966, 
+# 	\"client_ts\": 1387462}
+
+# {\"status\": \"sched_ok\", 
+# 	\"scheduled_time\": 1387378500, 
+# 	\"stop_contact_name\": \"Yin Yin Wu\", 
+# 	\"address\": \"3377 Mission St, SF\", 
+# 	\"client_name\": \"prim\", 
+# 	\"type\": \"pickup\", 
+# 	\"foreign_id\": \"NGYM\", 
+# 	\"driver_username\": \"elfido\"}
+
+
 require "open-uri"
 require "json"
 

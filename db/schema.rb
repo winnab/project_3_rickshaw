@@ -11,12 +11,21 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131218114725) do
+ActiveRecord::Schema.define(:version => 20131219145040) do
 
   create_table "drivers", :force => true do |t|
     t.string   "username"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+  end
+
+  create_table "location_requests", :force => true do |t|
+    t.integer "timeslot_id"
+    t.string  "username"
+    t.float   "lat"
+    t.float   "lng"
+    t.integer "server_ts"
+    t.integer "client_ts"
   end
 
   create_table "locations", :force => true do |t|
@@ -26,6 +35,18 @@ ActiveRecord::Schema.define(:version => 20131218114725) do
     t.datetime "rickshaw_server_ts"
     t.datetime "created_at",                                        :null => false
     t.datetime "updated_at",                                        :null => false
+  end
+
+  create_table "stop_requests", :force => true do |t|
+    t.integer "timeslot_id"
+    t.string  "status"
+    t.integer "scheduled_time"
+    t.string  "stop_contact_name"
+    t.string  "address"
+    t.string  "client_name"
+    t.string  "type"
+    t.string  "foreign_id"
+    t.string  "driver_username"
   end
 
   create_table "stops", :force => true do |t|
@@ -42,6 +63,11 @@ ActiveRecord::Schema.define(:version => 20131218114725) do
     t.datetime "updated_at",          :null => false
     t.float    "latitude"
     t.float    "longitude"
+  end
+
+  create_table "timeslots", :force => true do |t|
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
 end
