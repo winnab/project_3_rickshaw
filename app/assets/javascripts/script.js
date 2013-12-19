@@ -2,6 +2,7 @@ var map;
 var bounds;
 var markers = [];
 var stop_markers = [];
+var displayed_driver;
 var directionsService = new google.maps.DirectionsService();
 var directionsDisplay = new google.maps.DirectionsRenderer({suppressMarkers: false});
 //var data;
@@ -11,7 +12,7 @@ function main(){
 	initRoutesList();
 	initMap();
 	getData();
-	// setInterval(getData, refreshPeriod)
+	setInterval(getData, refreshPeriod)
 }
 
 function initRoutesList(){
@@ -26,6 +27,7 @@ function initMap(){
   }
   bounds = new google.maps.LatLngBounds();
   map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+  // getMapIconImage(map, marker);
   directionsDisplay.setMap(map);
 }
 
@@ -36,9 +38,11 @@ function getData(){
 function normalizeData(data){
 	normData = $.each(data.drivers, function(index, driver){
 		$.each(driver.stops, function(index, stop){
-			stop.index     = index + 1;
-			stop.is_pickup = stop.stop_type == 'pickup';
-			stop.is_done   = stop.job_status == 'done_ok';
+			stop.index     		= index + 1;
+			stop.is_pickup 		= stop.stop_type == 'pickup';
+			stop.is_done   		= stop.job_status == 'done_ok';
+			stop.is_due   		= stop.job_status == null;
+			stop.is_overdue   = stop.job_status == 'overdue';
 		})
 	})
 	return normData
@@ -57,11 +61,16 @@ function handleData(data){
 function renderDriversList(data){
 	$("#active-drivers, #inactive-drivers").html("");
 	$.each(data.drivers, renderDriversNamesList)
-	// $(".driver-name").on("click", renderStops);
+	if(displayed_driver != undefined){
+		renderDriverStopsList(displayed_driver);
+		renderDriverStopsMap(displayed_driver);
+	}
 	$('.driver-name-box').on("click", function(){
 		$('.stop-info-box').hide();
+		clearMarkers();
 		var id = parseInt($(this).attr('id').replace( /\D+/g, ''));
 		var driver = _.findWhere(data.drivers, {id: id});
+		displayed_driver = driver;
 		renderDriverStopsList(driver);
 		renderDriverStopsMap(driver);
 	});
@@ -88,46 +97,107 @@ function renderDriverStopsList(driver) {
 // *************************************************************************************
 
 
-// general, change the marker to a custom icon ******************
-function getMapIconImage(index, driver){
-	var imgUrl = stop.is_done ? 'https://static.squarespace.com/static/518d93f7e4b02aeff5d41e7a/5236c374e4b0b842899401e8/52b1d0f4e4b0d0e269589e3d/1387385076916/done_marker_c_20.png' : 'https://static.squarespace.com/static/518d93f7e4b02aeff5d41e7a/5236c374e4b0b842899401e8/52b1d153e4b0867f46039a2a/1387385172164/to_do_marker_c_20.png'
-	var image = {
-		  url: imgUrl,
-		  size: new google.maps.Size(20, 20),
-		  origin: new google.maps.Point(0,0),
-		  anchor: new google.maps.Point(0, 20)
-	};
-	return image
-}
+// function getStopStatusIcon(index, stop){
+
+// 	switch(stop) {
+// 		case stop.is_done:
+// 			// to do
+// 			var image = {
+// 				url: 'http://goo.gl/cJjBaI',
+// 				size: new google.maps.Size(30, 30),
+// 				origin: new google.maps.Point(0,0),
+// 				anchor: new google.maps.Point(0, 45),
+// 			}
+// 			break;
+// 		case stop.is_due:
+// 			// done
+// 			var image = {
+// 				url: 'http://goo.gl/cJjBaI',
+// 				size: new google.maps.Size(30, 30),
+// 				origin: new google.maps.Point(0,0),
+// 				anchor: new google.maps.Point(0, 45),
+// 			}
+// 			break;
+// 		case stop.is_overdue:
+// 			// overdue
+// 			var image = {
+// 				url: 'http://goo.gl/cJjBaI',
+// 				size: new google.maps.Size(30, 30),
+// 				origin: new google.maps.Point(0,0),
+// 				anchor: new google.maps.Point(0, 45),
+// 			}
+// 			break;
+// 		default:
+// 			var image = null 
+// 		}
+		
+// 	return image
+// }
+
+
+// info window
+
+// function getMapIconImage(map, marker){
+// var contentString = '<div id="content">'+
+//       '<div id="siteNotice">'+
+//       '</div>'+
+//       '<h1 id="firstHeading" class="firstHeading">Uluru</h1>'+
+//       '<div id="bodyContent">'+
+//       '<p><b>Test</b>, also referred to as <b>Ayers Rock</b>' +
+//       '</div>'+
+//       '</div>';
+
+//   var infowindow = new google.maps.InfoWindow({
+//       content: contentString
+//   });
+
+//   google.maps.event.addListener(marker, 'click', function() {
+//     infowindow.open(map,marker);
+//   });
+// }
 
 // drivers' locations  ********************************************
+
+
 function renderDriverCurrLocMap(data){
 	$.each(data.drivers, renderDriversCurrLocMap);
 }
 
-
 function renderDriversCurrLocMap(index, driver){
-	if((driver.locations.length > 1) || (driver.locations.length == 1)){
+	
+	if(driver.locations.length  >= 1){
+		var image = {
+			url: 'http://goo.gl/cJjBaI',
+			size: new google.maps.Size(30, 30),
+			origin: new google.maps.Point(0,0),
+			anchor: new google.maps.Point(0, 45), 
+			// url: 'http://goo.gl/cJjBaI', 
+			// scaledSize: new google.maps.Size(30, 30), 
+			// anchor: new google.maps.Point(0, 0), 
+			// origin: new google.maps.Point(0,15), 
+		};
+
 		var location = driver.locations.slice(-1)[0];
 		var latLng = new google.maps.LatLng(location.lat, location.lng);
+
 		var marker = new google.maps.Marker({
-	      position: latLng,
-	      map: map,
-	      title: driver.username,
-        icon: getMapIconImage(driver)
-	  });
-	  markers.push(marker);
-	  extendBoundaries();
-	} 	
+			position: latLng,
+			map: map,
+			title: driver.username,
+			icon: image
+		});
+		markers.push(marker);
+		extendBoundaries();
+	}
 }
 
 // stops and routes locations ***************************************
 function renderDriverStopsMap(driver){
-	clearMarkers();
-	for(var i = 0; i < driver.stops.length; i++){
-		if(i< driver.stops.length-1)
-			renderDirections(driver.stops[i].stop_address, driver.stops[i+1].stop_address)
-	}
+	// clearMarkers();
+	// for(var i = 0; i < driver.stops.length; i++){
+	// 	if(i< driver.stops.length-1)
+	// 		renderDirections(driver.stops[i].stop_address, driver.stops[i+1].stop_address)
+	// }
 	$.each(driver.stops, renderStopsLocations);
 }
 

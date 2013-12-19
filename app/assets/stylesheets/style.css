@@ -163,12 +163,20 @@ textarea {
   line-height: 1.5em;
 }
 
+#active-drivers:hover{
+  cursor: pointer;
+}
+
 .driver-name-box{
   margin-top: 15px;
 }
 
 .done{
   opacity: 0.5;
+}
+
+#inactive-drivers h2:hover{
+  cursor: default;
 }
 
 .route-icons {
@@ -202,6 +210,10 @@ textarea {
 
 .checkmark {
   background-image: url('checkmark.png');
+}
+
+.exclamationPt{
+
 }
 
 .stop-info-box {
