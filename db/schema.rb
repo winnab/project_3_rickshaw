@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131219145040) do
+ActiveRecord::Schema.define(:version => 20131220005115) do
 
   create_table "drivers", :force => true do |t|
     t.string   "username"
@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(:version => 20131219145040) do
     t.float   "lng"
     t.integer "server_ts"
     t.integer "client_ts"
+    t.string  "driver_id"
   end
 
   create_table "locations", :force => true do |t|
@@ -44,9 +45,12 @@ ActiveRecord::Schema.define(:version => 20131219145040) do
     t.string  "stop_contact_name"
     t.string  "address"
     t.string  "client_name"
-    t.string  "type"
     t.string  "foreign_id"
     t.string  "driver_username"
+    t.string  "driver_id"
+    t.string  "scheduled_status"
+    t.string  "job_status"
+    t.string  "stop_type"
   end
 
   create_table "stops", :force => true do |t|

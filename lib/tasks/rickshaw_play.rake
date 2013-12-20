@@ -12,12 +12,13 @@ namespace :rickshaw do
 	    else
 	    	5 # sleeps less than request, playback will be faster than real-time
 	    end
-
-	    Timeslot.find_in_batches(batch_size: 50) do |timeslots|
-	    	timeslots.each do |timeslot|
-		    	# get time slots
-		    	# check to see if record exist, update
-		    	#
+	    loop do
+	    	Timeslot.find_in_batches(batch_size: 50) do |timeslots|
+	    		timeslots.each do |timeslot|
+		    		# get time slots
+		    		# check to see if record exist, update
+		    		#
+	    		end
 	    	end
 	    end
   	end
