@@ -3,4 +3,6 @@ class Driver < ActiveRecord::Base
 
 	has_many :stops
 	has_many :locations
+	has_many :stop_requests
+	has_many :location_requests
 end

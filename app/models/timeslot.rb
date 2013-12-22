@@ -1,5 +1,5 @@
 class Timeslot < ActiveRecord::Base
 	attr_accessible :id
-	has_one :stop_request
-	has_one :location_request
+	has_many :stop_requests
+	has_many :location_requests
 end

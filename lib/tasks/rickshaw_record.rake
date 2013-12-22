@@ -14,19 +14,19 @@ namespace :rickshaw do
 	    sleep_period = if ENV['SLEEP']
 	    	ENV['SLEEP'].to_i
 	    else
-	    	10
+	    	5
 	    end
 
 	    num = if ENV['NUM']
 	    	ENV['NUM'].to_i
 	    else
-	    	120 # change to 120 after this is tested
+	    	1 # change to 120 after this is tested
 	    end
 
 	    def initGetStops
-	    	# date 					= Date.today.strftime("%Y%m%d")
-	    	url 					= "https://gorickshaw.com/stops/20131219"
-	    	puts "about to request all stops"
+	    	# date 				= Date.today.strftime("%Y%m%d") -- remember time difference!!
+	    	url 					= "https://gorickshaw.com/stops/20131220"
+	    	puts "requesting all stops..."
 	    	request_body 	= open(url, :http_basic_authentication=>[ENV["RICKSHAW_KEY"], ENV["RICKSHAW_PASS"]]).read
 	    	data_stop_loc = JSON.parse request_body
 	    	return data_stop_loc
@@ -34,7 +34,7 @@ namespace :rickshaw do
 
 	    def initGetLocations
 	    	url = "https://gorickshaw.com/location_history"
-	    	puts "about to request all driver location data--slow..."
+	    	puts "requesting driver location data..."
 	    	request_body 	= open(url, :http_basic_authentication=>[ENV["RICKSHAW_KEY"], ENV["RICKSHAW_PASS"]]).read;
 	    	data_driver_loc = JSON.parse request_body;	
 	    	return data_driver_loc.group_by { |r| r["username"] }
@@ -46,14 +46,12 @@ namespace :rickshaw do
 				driver.id
 			end
 	    
-	    puts "about to enter loop"
+	    puts "about to enter loop -- will loop #{num} times"
 
 	  	num.times do |record|
 
-	  		puts "starting loop. about to sleep for #{sleep_period} seconds"
+	  		puts "iteration #{record}. sleep for #{sleep_period} seconds"
 		  	sleep sleep_period
-
-	  		puts "about to start loop iteration #{record}"
 		  	data_driver_loc = initGetLocations
 		  	data_stop_loc   =	initGetStops
 
@@ -72,22 +70,20 @@ namespace :rickshaw do
 		  	drivers_with_latest_loc.each do |uname, record| 
 		  		location 		= LocationRequest.create!(		  			
 		  			driver_id: 	convert_username_to_id(uname),
+		  			username: 	record["username"],
 		  			lat: 				record["lat"],
 		  			lng: 				record["lng"],
 		  			client_ts: 	record["client_ts"]
 		  			)
-		  		timeslot.location_request = location
-		  		timeslot.save!
+		  		timeslot.location_requests.push location
+		  		timeslot.save
 		  	end
-		  	
 
 	  		data_stop_loc.each do |record|
-	  			status = record["status"].split(" ")
 	  			stop = StopRequest.create!(
 	  				driver_id: 						convert_username_to_id(record),
-	  				driver_username: 			record["driver_username"],
-	  				job_status: 					status[0],
-	  				scheduled_status: 		status[1],
+	  				username: 						record["driver_username"],
+	  				status: 							record["status"],
 	  				scheduled_time:				record["scheduled_time"],
 	  				stop_contact_name: 		record["stop_contact_name"],
 	  				address: 							record["address"],
@@ -95,11 +91,9 @@ namespace :rickshaw do
 	  				stop_type:						record["type"],
 	  				foreign_id:						record["foreign_id"]
 	  			)
-	  			timeslot.stop_request = stop
+	  			timeslot.stop_requests.push stop
 	  			timeslot.save!
 		  	end
-
-		  	puts "just before sleep, everything should be saved"
 		  end	
 
   	end

@@ -14,7 +14,7 @@
     %script#driver_route{type: "text/x-handlebars-template"}
       :plain
         <div id='collapsed_driver_{{id}}_stops' class="driver-name-box">
-            <h2 class="active-driver-name" data-id="{{id}}">{{username}}</h2> 
+            <h2 class="active-driver-name" data-id="{{id}}">{{username}}, {{stops.length}}</h2> 
         </div>
     %script#driver_stops{type: "text/x-handlebars-template"}
       :plain      
@@ -23,8 +23,7 @@
               <div class='route-icons stop-number'> {{index}} </div>
               <div class='route-icons {{#if is_pickup}}pickup{{else}}dropoff{{/if}}'></div>
               <div class='route-icons {{#if is_done}}checkmark{{/if}}'></div>
-              <div class='route-icons {{#if is_due}}clock{{/if}}'></div>
-              <div class='route-icons {{#if is_overdue}}exclamationPt{{/if}}'></div>
+              
             </div>
             <div class='col-md-9 route-nav-text'>
               <h3>{{stop_contact_name}}</h3>

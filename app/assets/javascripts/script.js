@@ -1,5 +1,6 @@
 var map;
 var bounds;
+var driverLocIndex = 0;
 var markers = [];
 var stop_markers = [];
 var displayed_driver;
@@ -12,7 +13,7 @@ function main(){
 	initRoutesList();
 	initMap();
 	getData();
-	// setInterval(getData, refreshPeriod)
+	setInterval(getData, refreshPeriod)
 }
 
 function initRoutesList(){
@@ -67,7 +68,7 @@ function renderDriversList(data){
 	}
 	$('.driver-name-box').on("click", function(){
 		$('.stop-info-box').hide(600);
-		clearMarkers();
+		clearStopMarkers();
 		var id = parseInt($(this).attr('id').replace( /\D+/g, ''));
 		var driver = _.findWhere(data.drivers, {id: id});
 		displayed_driver = driver;
@@ -98,7 +99,6 @@ function renderDriverStopsList(driver) {
 
 
 function getStopStatusIcon(index, stop){
-	console.log("before switch", stop.job_status, stop.is_done, stop.is_due, stop.is_overdue)
 	switch(stop.job_status){
 		case null:
 			// to do
@@ -108,7 +108,6 @@ function getStopStatusIcon(index, stop){
 				origin: new google.maps.Point(30,0),
 				anchor: new google.maps.Point(0, 45),
 			};
-			console.log(image)
 			return stop_image;
 			break;
 		case "done_ok":
@@ -119,7 +118,6 @@ function getStopStatusIcon(index, stop){
 				origin: new google.maps.Point(60,0),
 				anchor: new google.maps.Point(0, 60),
 			}
-			console.log(image)
 			return stop_image;
 			break;
 		case "overdue":
@@ -130,47 +128,23 @@ function getStopStatusIcon(index, stop){
 				origin: new google.maps.Point(0,0),
 				anchor: new google.maps.Point(0, 75),
 			}
-			console.log(image)
 			return stop_image;
 			break;
 		default:
 			var image = null 
 			break;
 		}
-
-	console.log("after switch before return ", stop_image)
 	return stop_image;
-	console.log("after return image ", stop_image)
 	debugger
 }
 
-
-// info window
-
-// function infoWindow(map, marker){
-// var contentString = '<div id="content">'+
-//       '<div id="siteNotice">'+
-//       '</div>'+
-//       '<h1 id="firstHeading" class="firstHeading">Uluru</h1>'+
-//       '<div id="bodyContent">'+
-//       '<p><b>Test</b>, also referred to as <b>Ayers Rock</b>' +
-//       '</div>'+
-//       '</div>';
-
-//   var infowindow = new google.maps.InfoWindow({
-//       content: contentString
-//   });
-
-//   google.maps.event.addListener(marker, 'click', function() {
-//     infowindow.open(map,marker);
-//   });
-// }
-
 // drivers' locations  ********************************************
 
-
 function renderDriverCurrLocMap(data){
+	clearDriverMarkers();
 	$.each(data.drivers, renderDriversCurrLocMap);
+	// for fixed-seed data loop:
+	driverLocIndex += 1;
 }
 
 function renderDriversCurrLocMap(index, driver){
@@ -180,14 +154,12 @@ function renderDriversCurrLocMap(index, driver){
 			url: 'http://goo.gl/cJjBaI',
 			size: new google.maps.Size(30, 30),
 			origin: new google.maps.Point(0,0),
-			anchor: new google.maps.Point(0, 45), 
-			// url: 'http://goo.gl/cJjBaI', 
-			// scaledSize: new google.maps.Size(30, 30), 
-			// anchor: new google.maps.Point(0, 0), 
-			// origin: new google.maps.Point(0,15), 
+			anchor: new google.maps.Point(0, 45),  
 		};
 
-		var location = driver.locations.slice(-1)[0];
+		// var location = driver.locations.slice(-1)[index];
+		var location = driver.locations[driverLocIndex];
+		console.log(driverLocIndex, location)
 		var latLng = new google.maps.LatLng(location.lat, location.lng);
 
 		var marker = new google.maps.Marker({
@@ -240,13 +212,9 @@ function renderDirections(start, end){
 }
 
 // Sets the map on all markers in both arrays.
-function setAllMap(map) {
+function setAllMap(map, markers) {
   for (var i = 0; i < markers.length; i++) {
     markers[i].setMap(map);
-  };
-  
-  for (var s = 0; s < stop_markers.length; s++) {
-    stop_markers[s].setMap(map);
   };
 }
 
@@ -256,7 +224,8 @@ function extendBoundaries(){
 }
 
 // Removes the markers from the map, but keeps them in the array.
-function clearMarkers() { setAllMap(null); }
+function clearDriverMarkers() { setAllMap(null, markers); }
+function clearStopMarkers() { setAllMap(null, stop_markers); }
 // Shows any markers currently in the array.
 function showMarkers() { setAllMap(map); }
 // Deletes all markers in the array by removing references to them.
@@ -265,3 +234,25 @@ function deleteMarkers() { clearMarkers(); markers = []; }
 
 $(document).ready(main)
 
+
+
+// info window
+
+// function infoWindow(map, marker){
+// var contentString = '<div id="content">'+
+//       '<div id="siteNotice">'+
+//       '</div>'+
+//       '<h1 id="firstHeading" class="firstHeading">Uluru</h1>'+
+//       '<div id="bodyContent">'+
+//       '<p><b>Test</b>, also referred to as <b>Ayers Rock</b>' +
+//       '</div>'+
+//       '</div>';
+
+//   var infowindow = new google.maps.InfoWindow({
+//       content: contentString
+//   });
+
+//   google.maps.event.addListener(marker, 'click', function() {
+//     infowindow.open(map,marker);
+//   });
+// }n 
