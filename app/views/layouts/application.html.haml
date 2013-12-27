@@ -14,7 +14,7 @@
     %script#driver_route{type: "text/x-handlebars-template"}
       :plain
         <div id='collapsed_driver_{{id}}_stops' class="driver-name-box">
-            <h2 class="active-driver-name" data-id="{{id}}">{{username}}, {{stops.length}}</h2> 
+            <h2 class="active-driver-name" data-id="{{id}}">{{username}}, <span class="small">{{done_stops}}/{{stops.length}}</span></h2> 
         </div>
     %script#driver_stops{type: "text/x-handlebars-template"}
       :plain      

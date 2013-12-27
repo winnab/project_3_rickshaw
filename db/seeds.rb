@@ -8,7 +8,7 @@ w_driver = Driver.create!({ username: "Winna" })
 m_driver = Driver.create!({ username: "Murph" })
 
 
-(1..30).each do |i|
+(1..15).each do |i|
 	Stop.create!({
 		driver_id: rand(1..4),
 		job_status: 'done_ok',
@@ -64,7 +64,7 @@ end
 
 
 
-(1..30).each do |i|
+(1..15).each do |i|
 	Stop.create!({
 		driver_id: rand(1..4),
 		scheduled_datetime: DateTime.now + (i * 100).seconds,

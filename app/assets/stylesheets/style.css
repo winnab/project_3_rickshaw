@@ -225,6 +225,11 @@ textarea {
   padding-right: 15px;
 }
 
+.small{
+  font-size: .8em;
+  font-weight: normal;
+}
+
 
 /* ==========================================================================
    Helper classes

@@ -9,7 +9,7 @@ var directionsDisplay = new google.maps.DirectionsRenderer({suppressMarkers: fal
 //var data;
 
 function main(){
-	var refreshPeriod = 2000;
+	var refreshPeriod = 10000;
 	initRoutesList();
 	initMap();
 	getData();
@@ -41,8 +41,8 @@ function normalizeData(data){
 		$.each(driver.stops, function(index, stop){
 			stop.index     		= index + 1;
 			stop.is_pickup 		= stop.stop_type == 'pickup';
-			stop.is_done   		= stop.job_status == 'done_ok';
 			stop.is_due   		= stop.job_status == null;
+			stop.is_done   		= stop.job_status == 'done_ok';
 			stop.is_overdue   = stop.job_status == 'overdue';
 		})
 	})
@@ -61,6 +61,7 @@ function handleData(data){
 
 function renderDriversList(data){
 	$("#active-drivers, #inactive-drivers").html("");
+
 	$.each(data.drivers, renderDriversNamesList)
 	if(displayed_driver != undefined){
 		renderDriverStopsList(displayed_driver);
@@ -78,6 +79,7 @@ function renderDriversList(data){
 }
 
 function renderDriversNamesList(index, driver){
+
 	var stops = driver.stops
 	var container = stops.length > 0 ? "#active-drivers" : "#inactive-drivers"
 	var	source = $("#driver_route").html(); 
@@ -91,6 +93,7 @@ function renderDriverStopsList(driver) {
   $.each(driver.stops, function(index, stop){
   	$("#collapsed_driver_" + stop.driver_id + "_stops").append(template(stop));
 	});
+
 }
 
 // *************************************************************************************
@@ -135,7 +138,6 @@ function getStopStatusIcon(index, stop){
 			break;
 		}
 	return stop_image;
-	debugger
 }
 
 // drivers' locations  ********************************************
@@ -159,7 +161,6 @@ function renderDriversCurrLocMap(index, driver){
 
 		// var location = driver.locations.slice(-1)[index];
 		var location = driver.locations[driverLocIndex];
-		console.log(driverLocIndex, location)
 		var latLng = new google.maps.LatLng(location.lat, location.lng);
 
 		var marker = new google.maps.Marker({
@@ -206,7 +207,6 @@ function renderDirections(start, end){
     travelMode: google.maps.TravelMode.DRIVING
   };
   directionsService.route(request, function(result, status) {
-    console.log(status == google.maps.DirectionsStatus.OK, status)
     directionsDisplay.setDirections(result);
   });
 }

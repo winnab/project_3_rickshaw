@@ -3,40 +3,39 @@ require "json"
 
 namespace :rickshaw do
   namespace :api do
-
-  	desc "pull Rickshaw data into simulation models"
+  	desc "pulling Rickshaw data into simulation models"
   	task :record => :environment do
-  	# init
-  		StopRequest.delete_all
-  		LocationRequest.delete_all
-  		Timeslot.delete_all
-
 	    sleep_period = if ENV['SLEEP']
 	    	ENV['SLEEP'].to_i
 	    else
-	    	5
+	    	0
 	    end
 
 	    num = if ENV['NUM']
 	    	ENV['NUM'].to_i
 	    else
-	    	1 # change to 120 after this is tested
+	    	2 
 	    end
 
 	    def initGetStops
-	    	# date 				= Date.today.strftime("%Y%m%d") -- remember time difference!!
-	    	url 					= "https://gorickshaw.com/stops/20131220"
+	    	date							= Date.today.strftime("%Y%m%d")
+	    	url 							= "https://gorickshaw.com/stops/20131227"
+	    	
 	    	puts "requesting all stops..."
-	    	request_body 	= open(url, :http_basic_authentication=>[ENV["RICKSHAW_KEY"], ENV["RICKSHAW_PASS"]]).read
-	    	data_stop_loc = JSON.parse request_body
+	    	request_body 			= open(url, :http_basic_authentication=>[ENV["RICKSHAW_KEY"], ENV["RICKSHAW_PASS"]]).read
+	    	data_stop_loc 		= JSON.parse request_body
+	    	
 	    	return data_stop_loc
 	    end
 
 	    def initGetLocations
-	    	url = "https://gorickshaw.com/location_history"
+	    	url 							= "https://gorickshaw.com/location_history"
+	    	
 	    	puts "requesting driver location data..."
-	    	request_body 	= open(url, :http_basic_authentication=>[ENV["RICKSHAW_KEY"], ENV["RICKSHAW_PASS"]]).read;
-	    	data_driver_loc = JSON.parse request_body;	
+	    	
+	    	request_body 			= open(url, :http_basic_authentication=>[ENV["RICKSHAW_KEY"], ENV["RICKSHAW_PASS"]]).read;
+	    	data_driver_loc 	= JSON.parse request_body;	
+	    	
 	    	return data_driver_loc.group_by { |r| r["username"] }
 	    end
 
@@ -49,14 +48,12 @@ namespace :rickshaw do
 	    puts "about to enter loop -- will loop #{num} times"
 
 	  	num.times do |record|
-
 	  		puts "iteration #{record}. sleep for #{sleep_period} seconds"
 		  	sleep sleep_period
 		  	data_driver_loc = initGetLocations
 		  	data_stop_loc   =	initGetStops
 
-		  	# get an array of hashes where there is only one hash for each driver 
-		  	# that reps the most current location
+		  	# one hash for each driver with most current location
 		  	drivers_with_latest_loc = data_driver_loc.each_with_object({}) do |(uname, locs), hsh|
 		  		begin
 		  			hsh[uname] = locs.max_by {|l| l["server_ts"]}
