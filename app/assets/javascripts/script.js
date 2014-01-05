@@ -55,10 +55,6 @@ function handleData(data){
 	renderDriverCurrLocMap(data);
 }
 
-// *************************************************************************************
-// left side of screen: driver routes list views
-// *************************************************************************************
-
 function renderDriversList(data){
 	$("#active-drivers, #inactive-drivers").html("");
 
@@ -79,7 +75,6 @@ function renderDriversList(data){
 }
 
 function renderDriversNamesList(index, driver){
-
 	var stops = driver.stops
 	var container = stops.length > 0 ? "#active-drivers" : "#inactive-drivers"
 	var	source = $("#driver_route").html(); 
@@ -95,11 +90,6 @@ function renderDriverStopsList(driver) {
 	});
 
 }
-
-// *************************************************************************************
-// map views
-// *************************************************************************************
-
 
 function getStopStatusIcon(index, stop){
 	switch(stop.job_status){
@@ -196,8 +186,21 @@ function renderStopsLocations(index, stop){
   });
 
   stop_markers.push(stop_marker);
+  stopInfoWindow(map, stop_marker);
   extendBoundaries();
-} 	
+}
+
+function stopInfoWindow(map, stop_marker){
+	var contentString = 'test';
+
+  var infowindow = new google.maps.InfoWindow({
+      content: contentString
+  });
+
+  google.maps.event.addListener(stop_marker, 'click', function() {
+    infowindow.open(map, stop_marker);
+  });
+}
 
 
 function renderDirections(start, end){
@@ -233,26 +236,3 @@ function deleteMarkers() { clearMarkers(); markers = []; }
 
 
 $(document).ready(main)
-
-
-
-// info window
-
-// function infoWindow(map, marker){
-// var contentString = '<div id="content">'+
-//       '<div id="siteNotice">'+
-//       '</div>'+
-//       '<h1 id="firstHeading" class="firstHeading">Uluru</h1>'+
-//       '<div id="bodyContent">'+
-//       '<p><b>Test</b>, also referred to as <b>Ayers Rock</b>' +
-//       '</div>'+
-//       '</div>';
-
-//   var infowindow = new google.maps.InfoWindow({
-//       content: contentString
-//   });
-
-//   google.maps.event.addListener(marker, 'click', function() {
-//     infowindow.open(map,marker);
-//   });
-// }n 
