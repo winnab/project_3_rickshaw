@@ -31,12 +31,13 @@
               <p class='details'>client: {{client_name}}{{#if human_time}}, sched: {{human_time}}{{/if}}</p>
             </div>
           </div>
-    .col-md-3.left-nav
-      #logo
-        = image_tag("logo.png")
-      #stops-list.route-nav
-        #active-drivers
-        #inactive-drivers.done
-    .col-md-9
-      #map-canvas
+
+    #map-wrapper
+      #borders
+      #left-nav.go-left.col-one-of-four
+        test        
+        #stops-list.route-nav
+          #active-drivers
+          #inactive-drivers.done
+      #map-canvas{style: "position: static !important;"}
         

@@ -13,7 +13,7 @@ function main(){
 	initRoutesList();
 	initMap();
 	getData();
-	setInterval(getData, refreshPeriod)
+	// setInterval(getData, refreshPeriod)
 }
 
 function initRoutesList(){

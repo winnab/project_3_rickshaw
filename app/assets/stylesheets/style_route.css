@@ -1,0 +1,178 @@
+
+
+#left-nav:hover{
+  cursor: default;
+}
+
+#left-nav .section-spacer{
+  margin: 0 15px 10px;
+}
+
+#left-nav .text-section-spacer{
+  background-color: white;
+  padding: 0 15px 15px;
+}
+
+#left-nav h1, h2, h3, h4, h5, h6, p{
+  padding: 0;
+  margin: 0;
+  line-height: 1.5em;
+}
+
+#left-nav h2{
+  font-size: 1.1em;
+  padding-top: 10px;
+  letter-spacing: .025em;
+  display: inline-block;
+}
+
+#left-nav h3{
+  font-weight: normal;
+  font-size: .9em;
+  padding-top: 15px;
+}
+
+#top-box{
+  min-height: 80px;
+  margin: 15px 15px 0;
+  display: block;
+}
+
+#top-box div{
+  display: inline-block;
+  min-height: 80px;
+}
+
+.logo{
+  width: 65%;
+  background-image: url('file:///Users/WinnaB/Development/project_3_rickshaw/notes/style/tests/images/logo.png');
+}
+
+.spacer{
+  background: #FFFFFF;
+  width: 1.667%;
+}
+
+.btns{
+  width: 16.667%;
+  background-size: 55px 80px;
+  background-repeat:no-repeat;
+  background-position:center bottom;
+  cursor: pointer;
+}
+
+.refresh{
+  background-image: url('file:///Users/WinnaB/Development/project_3_rickshaw/notes/style/tests/images/refresh.png');
+}
+
+.refresh:hover{
+  background-image: url('file:///Users/WinnaB/Development/project_3_rickshaw/notes/style/tests/images/refresh_hover.png');
+}
+
+.show-all-drivers{
+  background-image: url('file:///Users/WinnaB/Development/project_3_rickshaw/notes/style/tests/images/show_all_drivers.png');
+}
+
+.show-all-drivers:hover{
+  background-image: url('file:///Users/WinnaB/Development/project_3_rickshaw/notes/style/tests/images/show_all_drivers_hover.png');
+}
+
+#active-drivers{
+  margin-top: 0;
+  padding-bottom: 5px;
+}
+
+#active-drivers h2{
+  color: #1DDEBB;
+  border-bottom: 1px dotted #1DDEBB;
+}
+
+#active-drivers h2:hover{
+  cursor: pointer;
+  color: #A6CF18;
+  border-bottom: 1px dotted #A6CF18;
+}
+
+#left-nav .selected{
+  color: #BA26C0;
+  cursor: default;
+}
+
+#left-nav .selected:hover{
+  color: #BA26C0;
+  border: none;
+}
+
+#left-nav h2.selected{
+  border: none;
+  margin-bottom: 5px;
+}
+
+.stops-box{
+  padding-left: 10px;
+  border-left: 1px dotted #F966FF
+}
+
+.stop-text{
+  padding-left: 5px;
+}
+
+.stop-details{
+  margin-bottom: 5px;
+}
+
+.stop-details:hover{
+  cursor: pointer;
+}
+
+.stop-text h4{
+  font-size: .9em;
+}
+
+.stop-text p{
+  font-size: .9em;
+  line-height: 1.6em;
+}
+
+.route-icons{
+  background-size: 10px 10px;
+  background-repeat:no-repeat;
+  background-position:top; 
+  border-bottom: 1px solid; 
+  text-align: center;
+  width: 25%;
+  min-width: 15px;
+  height: 15px;
+  margin: 5px 5% 0 0;
+  float: left;
+}
+
+.stop-number{
+  font-size: 11px;
+  line-height: 10px;
+  font-weight: bold;
+}
+
+.pickup{
+  background-image: url('file:///Users/WinnaB/Development/project_3_rickshaw/notes/style/tests/images/pickup.png');
+}
+
+.selected .pickup{
+ background-image: url('file:///Users/WinnaB/Development/project_3_rickshaw/notes/style/tests/images/pickup_active.png'); 
+}
+
+.selected .dropoff{
+ background-image: url('file:///Users/WinnaB/Development/project_3_rickshaw/notes/style/tests/images/dropoff_active.png'); 
+}
+
+.dropoff{
+  background-image: url('file:///Users/WinnaB/Development/project_3_rickshaw/notes/style/tests/images/dropoff.png');
+}
+
+.checkmark{
+  background-image: url('file:///Users/WinnaB/Development/project_3_rickshaw/notes/style/tests/images/checkmark.png');
+}
+
+.selected .checkmark{
+ background-image: url('file:///Users/WinnaB/Development/project_3_rickshaw/notes/style/tests/images/checkmark_active.png'); 
+}
