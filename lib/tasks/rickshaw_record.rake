@@ -61,7 +61,7 @@ namespace :rickshaw do
 
 		  	drivers_with_latest_loc.each do |uname, record| 
 		  		location 		= LocationRequest.create!(		  			
-		  			driver_id: 	convert_username_to_id(uname),
+		  			# driver_id: 	convert_username_to_id(uname),
 		  			username: 	record["username"],
 		  			lat: 				record["lat"],
 		  			lng: 				record["lng"],
@@ -73,13 +73,13 @@ namespace :rickshaw do
 
 	  		data_stop_loc.each do |record|
 	  			stop = StopRequest.create!(
-	  				driver_id: 						convert_username_to_id(record),
+	  				# driver_id: 						convert_username_to_id(record),
 	  				username: 						record["driver_username"],
 	  				status: 							record["status"],
 	  				scheduled_time:				record["scheduled_time"],
 	  				stop_contact_name: 		record["stop_contact_name"],
 	  				address: 							record["address"],
-	  				client_name: 					record["client_name"].capitalize,
+	  				client_name: 					record["client_name"],
 	  				stop_type:						record["type"],
 	  				foreign_id:						record["foreign_id"]
 	  			)

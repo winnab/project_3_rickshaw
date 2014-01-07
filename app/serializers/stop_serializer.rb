@@ -11,8 +11,14 @@ class StopSerializer < ActiveModel::Serializer
 		object.scheduled_datetime.strftime("%H:%M") rescue nil
 	end
 
+		# capitalize name unless check it's an email address
 	def client_name
-		object.client_name.capitalize
+		( object.client_name =~ /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i ) ? object.client_name : object.client_name.capitalize
+	end
+
+	# capitalize name unless check it's an email address
+	def stop_contact_name
+		( object.stop_contact_name =~ /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i ) ? object.stop_contact_name : object.stop_contact_name.capitalize
 	end
 
 end
