@@ -8,34 +8,29 @@ namespace :rickshaw do
 	    sleep_period = if ENV['SLEEP']
 	    	ENV['SLEEP'].to_i
 	    else
-	    	0
+		    0
 	    end
 
 	    num = if ENV['NUM']
 	    	ENV['NUM'].to_i
 	    else
-	    	2 
+	    	1 
 	    end
 
 	    def initGetStops
 	    	date							= Date.today.strftime("%Y%m%d")
-	    	url 							= "https://gorickshaw.com/stops/20131227"
-	    	
+	    	url 							= "https://gorickshaw.com/stops/20140107"
 	    	puts "requesting all stops..."
 	    	request_body 			= open(url, :http_basic_authentication=>[ENV["RICKSHAW_KEY"], ENV["RICKSHAW_PASS"]]).read
 	    	data_stop_loc 		= JSON.parse request_body
-	    	
 	    	return data_stop_loc
 	    end
 
 	    def initGetLocations
 	    	url 							= "https://gorickshaw.com/location_history"
-	    	
-	    	puts "requesting driver location data..."
-	    	
+	    	puts "requesting most recent location for each driver..."
 	    	request_body 			= open(url, :http_basic_authentication=>[ENV["RICKSHAW_KEY"], ENV["RICKSHAW_PASS"]]).read;
 	    	data_driver_loc 	= JSON.parse request_body;	
-	    	
 	    	return data_driver_loc.group_by { |r| r["username"] }
 	    end
 
@@ -45,10 +40,10 @@ namespace :rickshaw do
 				driver.id
 			end
 	    
-	    puts "about to enter loop -- will loop #{num} times"
+	    puts "about to enter loop. will loop #{num} times."
 
 	  	num.times do |record|
-	  		puts "iteration #{record}. sleep for #{sleep_period} seconds"
+	  		puts "iteration #{record}. sleeping for #{sleep_period} seconds."
 		  	sleep sleep_period
 		  	data_driver_loc = initGetLocations
 		  	data_stop_loc   =	initGetStops

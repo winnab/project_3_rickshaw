@@ -11,7 +11,7 @@ namespace :rickshaw do
 	    	15 # sleeps less than request, playback will be faster than real-time
 	    end
 	    
-    	Timeslot.find_in_batches(batch_size: 50) do |timeslot|
+    	Timeslot.find_each do |timeslot|
 	    	Time.zone = "UTC"
 	    	timeslot.location_requests.each do |location|
 	  			Location.create!(

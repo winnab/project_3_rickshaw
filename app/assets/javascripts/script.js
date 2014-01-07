@@ -6,7 +6,7 @@ var stop_markers = [];
 var displayed_driver;
 var directionsService = new google.maps.DirectionsService();
 var directionsDisplay = new google.maps.DirectionsRenderer({suppressMarkers: false});
-//var data;
+var data;
 
 function main(){
 	var refreshPeriod = 10000;
@@ -64,7 +64,7 @@ function renderDriversList(data){
 		renderDriverStopsMap(displayed_driver);
 	}
 	$('.driver-name-box').on("click", function(){
-		$('.stop-info-box').hide(600);
+		$('.stops-box').hide(600);
 		clearStopMarkers();
 		var id = parseInt($(this).attr('id').replace( /\D+/g, ''));
 		var driver = _.findWhere(data.drivers, {id: id});
@@ -86,7 +86,7 @@ function renderDriverStopsList(driver) {
   var	source = $("#driver_stops").html(); 
 	var template = Handlebars.compile(source);
   $.each(driver.stops, function(index, stop){
-  	$("#collapsed_driver_" + stop.driver_id + "_stops").append(template(stop));
+  	$("#driver_" + stop.driver_id + "_stop_" + index).append(template(stop));
 	});
 
 }

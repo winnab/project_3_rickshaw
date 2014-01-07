@@ -1,5 +1,3 @@
-
-
 #left-nav:hover{
   cursor: default;
 }
@@ -45,7 +43,7 @@
 
 .logo{
   width: 65%;
-  background-image: url('file:///Users/WinnaB/Development/project_3_rickshaw/notes/style/tests/images/logo.png');
+  background-image: url('logo.png');
 }
 
 .spacer{
@@ -62,19 +60,19 @@
 }
 
 .refresh{
-  background-image: url('file:///Users/WinnaB/Development/project_3_rickshaw/notes/style/tests/images/refresh.png');
+  background-image: url('refresh.png');
 }
 
 .refresh:hover{
-  background-image: url('file:///Users/WinnaB/Development/project_3_rickshaw/notes/style/tests/images/refresh_hover.png');
+  background-image: url('refresh_hover.png');
 }
 
 .show-all-drivers{
-  background-image: url('file:///Users/WinnaB/Development/project_3_rickshaw/notes/style/tests/images/show_all_drivers.png');
+  background-image: url('show_all_drivers.png');
 }
 
 .show-all-drivers:hover{
-  background-image: url('file:///Users/WinnaB/Development/project_3_rickshaw/notes/style/tests/images/show_all_drivers_hover.png');
+  background-image: url('show_all_drivers_hover.png');
 }
 
 #active-drivers{
@@ -154,25 +152,25 @@
 }
 
 .pickup{
-  background-image: url('file:///Users/WinnaB/Development/project_3_rickshaw/notes/style/tests/images/pickup.png');
+  background-image: url('pickup.png');
 }
 
 .selected .pickup{
- background-image: url('file:///Users/WinnaB/Development/project_3_rickshaw/notes/style/tests/images/pickup_active.png'); 
+ background-image: url('pickup_active.png'); 
 }
 
 .selected .dropoff{
- background-image: url('file:///Users/WinnaB/Development/project_3_rickshaw/notes/style/tests/images/dropoff_active.png'); 
+ background-image: url('dropoff_active.png'); 
 }
 
 .dropoff{
-  background-image: url('file:///Users/WinnaB/Development/project_3_rickshaw/notes/style/tests/images/dropoff.png');
+  background-image: url('dropoff.png');
 }
 
 .checkmark{
-  background-image: url('file:///Users/WinnaB/Development/project_3_rickshaw/notes/style/tests/images/checkmark.png');
+  background-image: url('checkmark.png');
 }
 
 .selected .checkmark{
- background-image: url('file:///Users/WinnaB/Development/project_3_rickshaw/notes/style/tests/images/checkmark_active.png'); 
+ background-image: url('checkmark_active.png'); 
 }
