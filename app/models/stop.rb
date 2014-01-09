@@ -1,5 +1,8 @@
 class Stop < ActiveRecord::Base
-	attr_accessible :id, :driver_id, :scheduled_datetime, :stop_contact_name, :job_status, :scheduled_status, :client_name, :stop_type, :rickshaw_foreign_id, :stop_address, :latitude, :longitude
+	attr_accessible	:id, :driver_id, :scheduled_datetime, 
+									:stop_contact_name, :job_status, :scheduled_status, 
+									:client_name, :stop_type, :rickshaw_foreign_id, 
+									:stop_address, :latitude, :longitude
 	
 	belongs_to :driver
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131223165340) do
+ActiveRecord::Schema.define(:version => 20140108195400) do
 
   create_table "drivers", :force => true do |t|
     t.string   "username"
@@ -24,23 +24,15 @@ ActiveRecord::Schema.define(:version => 20131223165340) do
     t.string  "username"
     t.float   "lat"
     t.float   "lng"
-    t.integer "server_ts"
-    t.integer "client_ts"
     t.integer "driver_id"
   end
 
   create_table "locations", :force => true do |t|
     t.integer  "driver_id"
-    t.decimal  "lat",                :precision => 10, :scale => 6
-    t.decimal  "lng",                :precision => 10, :scale => 6
-    t.datetime "rickshaw_server_ts"
-    t.datetime "created_at",                                        :null => false
-    t.datetime "updated_at",                                        :null => false
-  end
-
-  create_table "rickshaw_objects", :force => true do |t|
-    t.string "json_stops"
-    t.string "json_locations"
+    t.decimal  "lat",        :precision => 10, :scale => 6
+    t.decimal  "lng",        :precision => 10, :scale => 6
+    t.datetime "created_at",                                :null => false
+    t.datetime "updated_at",                                :null => false
   end
 
   create_table "stop_requests", :force => true do |t|
@@ -56,6 +48,7 @@ ActiveRecord::Schema.define(:version => 20131223165340) do
     t.string  "stop_type"
     t.string  "username"
     t.integer "driver_id"
+    t.string  "stop_key"
   end
 
   create_table "stops", :force => true do |t|
@@ -72,6 +65,7 @@ ActiveRecord::Schema.define(:version => 20131223165340) do
     t.datetime "updated_at",          :null => false
     t.float    "latitude"
     t.float    "longitude"
+    t.string   "stop_key"
   end
 
   create_table "timeslots", :force => true do |t|

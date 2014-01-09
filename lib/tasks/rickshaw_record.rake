@@ -8,19 +8,20 @@ namespace :rickshaw do
 	    sleep_period = if ENV['SLEEP']
 	    	ENV['SLEEP'].to_i
 	    else
-		    0
+		    15
 	    end
 
 	    num = if ENV['NUM']
 	    	ENV['NUM'].to_i
 	    else
-	    	1 
+	    	100 
 	    end
 
 	    def initGetStops
-	    	date							= Date.today.strftime("%Y%m%d")
-	    	url 							= "https://gorickshaw.com/stops/20140107"
+	    	# date							= Date.today.strftime("%Y%m%d")
+	    	url 							= "https://gorickshaw.com/stops/20140108"
 	    	puts "requesting all stops..."
+	    	
 	    	request_body 			= open(url, :http_basic_authentication=>[ENV["RICKSHAW_KEY"], ENV["RICKSHAW_PASS"]]).read
 	    	data_stop_loc 		= JSON.parse request_body
 	    	return data_stop_loc
@@ -39,12 +40,19 @@ namespace :rickshaw do
 				driver 						= Driver.find_or_create_by_username(driver_username)
 				driver.id
 			end
+
+			def update_stop stop
+				stop_key = stop.stop_key
+				stop = StopRequest.find_by_stop_key(stop_key)
+				
+			end
 	    
 	    puts "about to enter loop. will loop #{num} times."
 
 	  	num.times do |record|
 	  		puts "iteration #{record}. sleeping for #{sleep_period} seconds."
 		  	sleep sleep_period
+		  	
 		  	data_driver_loc = initGetLocations
 		  	data_stop_loc   =	initGetStops
 
@@ -60,20 +68,18 @@ namespace :rickshaw do
 		  	timeslot = Timeslot.new
 
 		  	drivers_with_latest_loc.each do |uname, record| 
-		  		location 		= LocationRequest.create!(		  			
-		  			# driver_id: 	convert_username_to_id(uname),
+		  		location 		= LocationRequest.new(		  			
 		  			username: 	record["username"],
 		  			lat: 				record["lat"],
 		  			lng: 				record["lng"],
-		  			client_ts: 	record["client_ts"]
 		  			)
+	  			location.save if location.valid?
 		  		timeslot.location_requests.push location
 		  		timeslot.save
 		  	end
 
 	  		data_stop_loc.each do |record|
-	  			stop = StopRequest.create!(
-	  				# driver_id: 						convert_username_to_id(record),
+	  			stop = StopRequest.new(
 	  				username: 						record["driver_username"],
 	  				status: 							record["status"],
 	  				scheduled_time:				record["scheduled_time"],
@@ -83,8 +89,11 @@ namespace :rickshaw do
 	  				stop_type:						record["type"],
 	  				foreign_id:						record["foreign_id"]
 	  			)
+	  			stop.generate_stop_key if stop.valid?
+
+
 	  			timeslot.stop_requests.push stop
-	  			timeslot.save!
+	  			timeslot.save
 		  	end
 		  end	
 
