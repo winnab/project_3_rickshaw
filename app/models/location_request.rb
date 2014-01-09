@@ -5,8 +5,8 @@ class LocationRequest< ActiveRecord::Base
 	belongs_to :timeslot
 	belongs_to :driver
 
-	# validates :username
-	# validates	:lat
-	# validates	:lng
+	validates :username,	presence: true
+	validates	:lat,				presence: true
+	validates	:lng,				presence: true
 
 end

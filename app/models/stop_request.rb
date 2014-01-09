@@ -14,11 +14,14 @@ class StopRequest < ActiveRecord::Base
 	validates :address,							presence: true
 	validates :client_name,					presence: true
 	validates :stop_type,						presence: true
-	
-	# validates :stop_key,						uniqueness: true
 
-	def generate_stop_key
-		self.stop_key = (self.stop_contact_name + self.address + self.client_name + self.stop_type).parameterize.underscore.to_sym
+	def generate_stop_key!
+		stop_date = Time.at(self.scheduled_time).strftime("%Y%m%d")
+	  other_values = (self.stop_contact_name + self.address + self.client_name + self.stop_type).parameterize.underscore
+		self.stop_key = "#{stop_date}_#{other_values}"
+		self.save!
 	end
 
 end
+
+

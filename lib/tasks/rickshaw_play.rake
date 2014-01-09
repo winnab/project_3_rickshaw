@@ -1,107 +1,85 @@
-# require "open-uri"
-# require "json"
+require "open-uri"
+require "json"
 
-# namespace :rickshaw do
-#   namespace :api do
-#   	desc "simulation: converting rickshaw recorded data into real data for map interface"
-#   	task :play => :environment do
-# 	    Time.zone = "UTC"
-# 	    sleep_period = if ENV['SLEEP']
-# 	    	ENV['SLEEP'].to_i
-# 	    else
-# 	    	5 # sleeps less than record request, playback will be faster than real-time
-# 	    end
+namespace :rickshaw do
+  namespace :api do
+  	desc "simulation: converting rickshaw recorded data into real data for map interface"
+  	
+  	task :play => :environment do
+	    Time.zone = "UTC"
+			sleep_period = if ENV['SLEEP']
+				ENV['SLEEP'].to_i
+			else
+				5 # sleeps less than record request, playback will be faster than real-time
+			end
 
-# 	    puts "call clean_data if you want to check drivers, stop_requests and location_requests for nils and blanks"
+			num = if ENV['NUM']
+				ENV['NUM'].to_i
+			else
+				10   	 
+			end
 
-
-# 	  	def convert_loc_driver_id_to_id location_request
-# 	   		if ((location_request.driver_id == nil) || (Driver.where(id: location_request.driver_id).count == 0))
-# 					driver_username 	= location_request.username.downcase
-# 					driver 						= Driver.find_or_create_by_username(driver_username)
-# 					driver.save!
-# 					location_request.driver_id = driver.id
-# 					location_request.save!
-# 				end
-# 				location_request.driver_id
-# 			end
-
-# 	   	def convert_stop_driver_username_to_id stop_request
-# 	   		if ((stop_request.driver_id == nil) || (Driver.where(id: stop_request.driver_id).count == 0))
-# 					driver_username 	= stop_request.username.downcase
-# 					driver 						= Driver.find_or_create_by_username(driver_username)
-# 					driver.save!
-# 					stop_request.driver_id = driver.id
-# 					stop_request.save!
-# 				end
-# 				stop_request.driver_id
-# 			end
-
-# 			def create_all_statuses stop_request
-# 				statuses = stop_request.status.split(" ")						
-# 				if statuses.length > 1
-# 					stop_request.job_status = statuses[0]
-# 					stop_request.scheduled_status = statuses[1]
-# 				elsif statuses.length == 1
-# 					stop_request.job_status = nil
-# 					stop_request.scheduled_status = statuses[0]
-# 				else
-# 					stop_request.job_status = nil
-# 					stop_request.scheduled_status = nil
-# 				end
-# 				stop_request.save!
-# 				stop_request.job_status
-# 				stop_request.scheduled_status
-#   		end
-
-# 	    total_remaining = Timeslot.count
-# 	    puts "parsing #{total_remaining} Timeslot entries"
+	  	def convert_driver_id_to_id record
+	   		if ((record.driver_id == nil) || (Driver.where(id: record.driver_id).count == 0))
+					driver_username 	= record.username.downcase
+					driver 						= Driver.find_or_create_by_username(driver_username)
+					driver.save!
+					record.driver_id = driver.id
+					record.save!
+				end
+				record.driver_id
+			end
 			
-# 			# Save Timeslot entries to Location and Stop models
-#     	Timeslot.find_each do |timeslot|
-#     		puts "sleeping for #{sleep_period} seconds"
-#     		sleep sleep_period
+			num.times do |record|		
+				puts "starting iteration #{record} of #{num}."
+				puts "pausing for #{sleep_period} seconds"
+    		sleep sleep_period
+	    	
+	    	i = 0
+	    	Timeslot.all.each do |timeslot, i|
+					puts "processing timeslot #{i} of #{Timeslot.count}"
+	    		i++
 
-#     		if ( (timeslot.location_requests.count == 0 ) || (timeslot.stop_requests.count == 0) )
-#     			puts "timeslot has 0 location_requests or stop requests. timeslot removed."
-#     			timeslot.destroy
-#     		else 
-#     			puts "timeslot has location_requests and stop_requests. processing timeslot..."
-    	  	
-# 	  		  puts "saving location_requests to Location..."
-# 	  	  	timeslot.location_requests.find_each do |location_request|
-# 	  				Location.create!(
-# 	  					driver_id: convert_loc_driver_id_to_id(location_request),
-# 	  					lat: location_request.lat,
-# 	  					lng: location_request.lng,
-# 	  					rickshaw_server_ts: Time.at(location_request.client_ts).to_datetime   		
-# 	  				)
-# 	  			end
+	    		if ( timeslot.location_requests.empty? || timeslot.stop_requests.empty? )
+						puts "timeslot has 0 location_requests or stop requests. timeslot removed."
+						timeslot.destroy
+	    		else     	  	
+						puts "deleteing all records in Location and Stop to reinitialize demo"
+						Location.delete_all
+						Stop.delete_all	
+		  		  
+		  		  puts "saving location_requests to Location"
+		  	  	timeslot.location_requests.find_each do |record|
+		  				location = Location.new(
+		  					driver_id: convert_driver_id_to_id(record),
+		  					lat: record.lat,
+		  					lng: record.lng
+		  				)
+		  				location.save if record.valid?
+		  			end
 
-#     	  	puts "saving stop_requests to Stop..."
-#     	  	timeslot.stop_requests.find_each do |stop_request|
-#     				Stop.create!(
-#     					driver_id: convert_stop_driver_username_to_id(stop_request),
-#     					stop_contact_name: stop_request.stop_contact_name,
-#     					stop_address: stop_request.address,
-#     					client_name: stop_request.client_name,
-#     					stop_type: stop_request.stop_type,
-#     					rickshaw_foreign_id: stop_request.foreign_id,
-#     					scheduled_datetime: Time.at(stop_request.scheduled_time).utc.to_datetime
-#     					job_status: create_all_statuses(stop_request),
-#     					scheduled_status: create_all_statuses(stop_request)
-#     				)
+	    	  	puts "saving stop_requests to Stop"
+	    	  	timeslot.stop_requests.find_each do |record|
+	    				stop = Stop.new(
+	    					driver_id: convert_driver_id_to_id(record),
+	    					stop_contact_name: record.stop_contact_name,
+	    					stop_address: record.address,
+	    					client_name: record.client_name,
+	    					stop_type: record.stop_type,
+	    					rickshaw_foreign_id: record.foreign_id,
+	    					scheduled_datetime: Time.at(record.scheduled_time).utc.to_datetime
+	    				)
+		  				if stop.valid?
+		  					stop.create_all_statuses!(record)
+		  					stop.check_stop_uniqueness!(record)
+		  				end
+	    			end
 
-# 		    	end
-#     			timeslot.save!
-#     		end
-#     		# end Timeslot save
-
-#     		total_remaining = total_remaining - 1
-#     	  puts "timeslot locations and stops saved. iteration complete, #{total_remaining} remaining."	
-#     	end
-
-#   	end
-# 	end
-# end
+	    		end
+	    		
+	    	end
+	    end
+  	end
+	end
+end
 
