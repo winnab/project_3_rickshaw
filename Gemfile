@@ -21,7 +21,8 @@ end
 
 group :development, :test do
   gem 'better_errors'
-  gem 'pry-rails'
+  gem 'awesome_print'
+  gem 'jazz_hands'
   gem 'rspec-rails'
   gem 'shoulda'
   gem 'database_cleaner'
