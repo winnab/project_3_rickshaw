@@ -82,53 +82,53 @@ function renderDriversNamesList(index, driver){
 	$(container).append(template(driver));	
 }
 
-function renderDriverStopsList(driver) {
-  var	source = $("#driver_stops").html(); 
-	var template = Handlebars.compile(source);
-  $.each(driver.stops, function(index, stop){
-  	$("#driver_" + stop.driver_id + "_stop_" + index).append(template(stop));
-	});
+// function renderDriverStopsList(driver) {
+//   var	source = $("#driver_stops").html(); 
+// 	var template = Handlebars.compile(source);
+//   $.each(driver.stops, function(index, stop){
+//   	$("#driver_" + stop.driver_id + "_stop_" + index).append(template(stop));
+// 	});
 
-}
+// }
 
-function getStopStatusIcon(index, stop){
-	switch(stop.job_status){
-		case null:
-			// to do
-			var stop_image = {
-				url: 'http://goo.gl/cJjBaI',
-				size: new google.maps.Size(30, 30),
-				origin: new google.maps.Point(30,0),
-				anchor: new google.maps.Point(0, 45),
-			};
-			return stop_image;
-			break;
-		case "done_ok":
-			// done
-			var stop_image = {
-				url: 'http://goo.gl/cJjBaI',
-				size: new google.maps.Size(30, 30),
-				origin: new google.maps.Point(60,0),
-				anchor: new google.maps.Point(0, 60),
-			}
-			return stop_image;
-			break;
-		case "overdue":
-			// overdue
-			var stop_image = {
-				url: 'http://goo.gl/cJjBaI',
-				size: new google.maps.Size(90, 30),
-				origin: new google.maps.Point(0,0),
-				anchor: new google.maps.Point(0, 75),
-			}
-			return stop_image;
-			break;
-		default:
-			var image = null 
-			break;
-		}
-	return stop_image;
-}
+// function getStopStatusIcon(index, stop){
+// 	switch(stop.job_status){
+// 		case null:
+// 			// to do
+// 			var stop_image = {
+// 				url: 'http://goo.gl/cJjBaI',
+// 				size: new google.maps.Size(30, 30),
+// 				origin: new google.maps.Point(30,0),
+// 				anchor: new google.maps.Point(0, 45),
+// 			};
+// 			return stop_image;
+// 			break;
+// 		case "done_ok":
+// 			// done
+// 			var stop_image = {
+// 				url: 'http://goo.gl/cJjBaI',
+// 				size: new google.maps.Size(30, 30),
+// 				origin: new google.maps.Point(60,0),
+// 				anchor: new google.maps.Point(0, 60),
+// 			}
+// 			return stop_image;
+// 			break;
+// 		case "overdue":
+// 			// overdue
+// 			var stop_image = {
+// 				url: 'http://goo.gl/cJjBaI',
+// 				size: new google.maps.Size(90, 30),
+// 				origin: new google.maps.Point(0,0),
+// 				anchor: new google.maps.Point(0, 75),
+// 			}
+// 			return stop_image;
+// 			break;
+// 		default:
+// 			var image = null 
+// 			break;
+// 		}
+// 	return stop_image;
+// }
 
 // drivers' locations  ********************************************
 
@@ -171,48 +171,48 @@ function renderDriverStopsMap(driver){
 	// 	if(i< driver.stops.length-1)
 	// 		renderDirections(driver.stops[i].stop_address, driver.stops[i+1].stop_address)
 	// }
-	$.each(driver.stops, renderStopsLocations);
+	// $.each(driver.stops, renderStopsLocations);
 }
 
-function renderStopsLocations(index, stop){
+// function renderStopsLocations(index, stop){
 
-	var stopLatLng = new google.maps.LatLng(stop.latitude, stop.longitude);
+// 	var stopLatLng = new google.maps.LatLng(stop.latitude, stop.longitude);
 	
-	var stop_marker = new google.maps.Marker({
-      position: stopLatLng,
-      map: map,
-      title: stop.stop_address,
-      icon: getStopStatusIcon(index, stop)
-  });
+// 	var stop_marker = new google.maps.Marker({
+//       position: stopLatLng,
+//       map: map,
+//       title: stop.stop_address,
+//       icon: getStopStatusIcon(index, stop)
+//   });
 
-  stop_markers.push(stop_marker);
-  stopInfoWindow(map, stop_marker);
-  extendBoundaries();
-}
+//   stop_markers.push(stop_marker);
+//   stopInfoWindow(map, stop_marker);
+//   extendBoundaries();
+// }
 
-function stopInfoWindow(map, stop_marker){
-	var contentString = 'test';
+// function stopInfoWindow(map, stop_marker){
+// 	var contentString = 'test';
 
-  var infowindow = new google.maps.InfoWindow({
-      content: contentString
-  });
+//   var infowindow = new google.maps.InfoWindow({
+//       content: contentString
+//   });
 
-  google.maps.event.addListener(stop_marker, 'click', function() {
-    infowindow.open(map, stop_marker);
-  });
-}
+//   google.maps.event.addListener(stop_marker, 'click', function() {
+//     infowindow.open(map, stop_marker);
+//   });
+// }
 
 
-function renderDirections(start, end){
-  var request = {
-    origin:start,
-    destination:end,
-    travelMode: google.maps.TravelMode.DRIVING
-  };
-  directionsService.route(request, function(result, status) {
-    directionsDisplay.setDirections(result);
-  });
-}
+// function renderDirections(start, end){
+//   var request = {
+//     origin:start,
+//     destination:end,
+//     travelMode: google.maps.TravelMode.DRIVING
+//   };
+//   directionsService.route(request, function(result, status) {
+//     directionsDisplay.setDirections(result);
+//   });
+// }
 
 // Sets the map on all markers in both arrays.
 function setAllMap(map, markers) {
@@ -228,7 +228,7 @@ function extendBoundaries(){
 
 // Removes the markers from the map, but keeps them in the array.
 function clearDriverMarkers() { setAllMap(null, markers); }
-function clearStopMarkers() { setAllMap(null, stop_markers); }
+// function clearStopMarkers() { setAllMap(null, stop_markers); }
 // Shows any markers currently in the array.
 function showMarkers() { setAllMap(map); }
 // Deletes all markers in the array by removing references to them.
