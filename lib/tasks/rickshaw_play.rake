@@ -31,15 +31,12 @@ namespace :rickshaw do
 			end
 			
 			num.times do |record|		
-				puts "starting iteration #{record} of #{num}."
+				puts "starting loop iteration #{record} of #{num}."
 				puts "pausing for #{sleep_period} seconds"
     		sleep sleep_period
-	    	
-	    	i = 0
-	    	Timeslot.all.each do |timeslot, i|
-					puts "processing timeslot #{i} of #{Timeslot.count}"
-	    		i++
 
+	    	Timeslot.all.each do |timeslot|
+	    		puts "processing timeslot #{timeslot} of #{Timeslot.count}"
 	    		if ( timeslot.location_requests.empty? || timeslot.stop_requests.empty? )
 						puts "timeslot has 0 location_requests or stop requests. timeslot removed."
 						timeslot.destroy
@@ -50,6 +47,9 @@ namespace :rickshaw do
 		  		  
 		  		  puts "saving location_requests to Location"
 		  	  	timeslot.location_requests.find_each do |record|
+		  	  		i = 1
+		  	  		puts "processing timeslot location_request #{i} of #{timeslot.location_requests.count}"
+		  	  		i = i++
 		  				location = Location.new(
 		  					driver_id: convert_driver_id_to_id(record),
 		  					lat: record.lat,
@@ -58,8 +58,10 @@ namespace :rickshaw do
 		  				location.save if record.valid?
 		  			end
 
-	    	  	puts "saving stop_requests to Stop"
 	    	  	timeslot.stop_requests.find_each do |record|
+	    	  		i = 1
+	    	  		puts "processing timeslot stop_request #{i} of #{timeslot.stop_requests.count}"
+	    				i = i++
 	    				stop = Stop.new(
 	    					driver_id: convert_driver_id_to_id(record),
 	    					stop_contact_name: record.stop_contact_name,
