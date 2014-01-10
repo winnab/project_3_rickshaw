@@ -10,13 +10,13 @@ namespace :rickshaw do
 			sleep_period = if ENV['SLEEP']
 				ENV['SLEEP'].to_i
 			else
-				5 # sleeps less than record request, playback will be faster than real-time
+				2 # sleeps less than record request, playback will be faster than real-time
 			end
 
 			num = if ENV['NUM']
 				ENV['NUM'].to_i
 			else
-				10   	 
+				1   	 
 			end
 
 	  	def convert_driver_id_to_id record
@@ -32,10 +32,11 @@ namespace :rickshaw do
 			
 			num.times do |record|		
 				puts "starting loop iteration #{record} of #{num}."
-				puts "pausing for #{sleep_period} seconds"
-    		sleep sleep_period
 
 	    	Timeslot.all.each do |timeslot|
+	    		sleep sleep_period
+	    		puts "pausing for #{sleep_period} seconds"
+	    		
 	    		puts "processing timeslot #{timeslot} of #{Timeslot.count}"
 	    		if ( timeslot.location_requests.empty? || timeslot.stop_requests.empty? )
 						puts "timeslot has 0 location_requests or stop requests. timeslot removed."
