@@ -10,7 +10,7 @@ namespace :rickshaw do
 			sleep_period = if ENV['SLEEP']
 				ENV['SLEEP'].to_i
 			else
-				2 # sleeps less than record request, playback will be faster than real-time
+				0 # sleeps less than record request, playback will be faster than real-time
 			end
 
 			num = if ENV['NUM']
@@ -23,7 +23,6 @@ namespace :rickshaw do
 	   		if ((record.driver_id == nil) || (Driver.where(id: record.driver_id).count == 0))
 					driver_username 	= record.username.downcase
 					driver 						= Driver.find_or_create_by_username(driver_username)
-					driver.save!
 					record.driver_id = driver.id
 					record.save!
 				end
@@ -31,38 +30,33 @@ namespace :rickshaw do
 			end
 			
 			num.times do |record|		
-				puts "starting loop iteration #{record} of #{num}."
+				puts "starting loop iteration #{(record + 1)} of #{num}."
 
 	    	Timeslot.all.each do |timeslot|
-	    		sleep sleep_period
 	    		puts "pausing for #{sleep_period} seconds"
-	    		
-	    		puts "processing timeslot #{timeslot} of #{Timeslot.count}"
+	    		sleep sleep_period
+
+	    		puts "processing timeslot"
 	    		if ( timeslot.location_requests.empty? || timeslot.stop_requests.empty? )
 						puts "timeslot has 0 location_requests or stop requests. timeslot removed."
 						timeslot.destroy
 	    		else     	  	
-						puts "deleteing all records in Location and Stop to reinitialize demo"
-						Location.delete_all
-						Stop.delete_all	
+						# puts "deleteing all records in Location and Stop to reinitialize demo"
 		  		  
 		  		  puts "saving location_requests to Location"
 		  	  	timeslot.location_requests.find_each do |record|
-		  	  		i = 1
-		  	  		puts "processing timeslot location_request #{i} of #{timeslot.location_requests.count}"
-		  	  		i = i++
+		  	  		puts "processing timeslot location_request"
+
 		  				location = Location.new(
 		  					driver_id: convert_driver_id_to_id(record),
 		  					lat: record.lat,
 		  					lng: record.lng
 		  				)
-		  				location.save if record.valid?
+		  				location.save if location.valid?
 		  			end
 
 	    	  	timeslot.stop_requests.find_each do |record|
-	    	  		i = 1
-	    	  		puts "processing timeslot stop_request #{i} of #{timeslot.stop_requests.count}"
-	    				i = i++
+	    	  		puts "processing timeslot stop_request"
 	    				stop = Stop.new(
 	    					driver_id: convert_driver_id_to_id(record),
 	    					stop_contact_name: record.stop_contact_name,
