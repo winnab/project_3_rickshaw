@@ -10,75 +10,134 @@ namespace :rickshaw do
 			sleep_period = if ENV['SLEEP']
 				ENV['SLEEP'].to_i
 			else
-				5 # sleeps less than record request, playback will be faster than real-time
+				3 # sleeps less than record request, playback will be faster than real-time
 			end
 
 			num = if ENV['NUM']
 				ENV['NUM'].to_i
 			else
-				10   	 
+				1	 
+			end
+
+			def stop_unique?(record, stop)
+				existing_stop = Stop.find_by_stop_key(record.stop_key)
+				unique_stop = (existing_stop == nil) ?  true : false
+				if unique_stop
+					new_stop_key stop
+				else
+					replace_stop(existing_stop, stop)
+				end
+			end
+
+			def driver_info_complete? record
+				puts "checking for driver."
+				return ((record.driver_id == nil) || (Driver.where(id: record.driver_id).count == 0)) ? false : true
 			end
 
 	  	def convert_driver_id_to_id record
-	   		if ((record.driver_id == nil) || (Driver.where(id: record.driver_id).count == 0))
+	   		unless driver_info_complete? record
 					driver_username 	= record.username.downcase
 					driver 						= Driver.find_or_create_by_username(driver_username)
-					driver.save!
-					record.driver_id = driver.id
-					record.save!
+					puts "driver is #{driver.username}, id #{driver.id}"
+					return driver.id
 				end
-				record.driver_id
+				puts "driver is #{record.username}, id #{record.driver_id}"
+			end
+
+			def new_stop_key stop
+  			stop_time = stop.scheduled_datetime.strftime("%Y%m%d")
+  			other_values 	= (	stop.stop_contact_name + 
+				  								stop.stop_address + 
+				  								stop.client_name + 
+				  								stop.stop_type).parameterize.underscore
+				stop.stop_key 	= "#{stop_time}_#{other_values}"
+				stop.save!
+				puts "stop doesn't exist in system. new stop key #{stop.stop_key} created. stop saved."
+			end
+
+			def replace_stop(existing_stop, stop)
+				puts "stop exists in system. updating...."
+				existing_stop = stop
+				existing_stop.save! 
+				puts "saved. created_at #{stop.created_at}, updated_at #{stop.updated_at}. time now is #{Time.now}."
+			end
+
+			def stop_statuses(record, stop)
+				statuses = (record.status).split(" ")		
+				puts "processing record status: #{record.status}"		
+				if statuses.length > 1
+					stop.job_status = statuses[0]
+					stop.scheduled_status = statuses[1]
+				elsif statuses.length == 1
+					stop.job_status = nil
+					stop.scheduled_status = statuses[0]
+				else
+					stop.job_status = nil
+					stop.scheduled_status = nil
+				end
+				stop.save
+				puts "stop status: #{stop.job_status} #{stop.scheduled_status}"
 			end
 			
 			num.times do |record|		
-				puts "starting loop iteration #{record} of #{num}."
-				puts "pausing for #{sleep_period} seconds"
+				puts "// OVERALL LOOP //////////////////////////////////////////////////"
     		sleep sleep_period
+    		
+    		# init loop
+    		Stop.destroy_all
+    		Location.destroy_all
 
+	    	# go through timestamps
 	    	Timeslot.all.each do |timeslot|
-	    		puts "processing timeslot #{timeslot} of #{Timeslot.count}"
+	    		puts ""
+	    		puts "// processing new timeslot ///////////////////////////////////////////////////////////////////////////////////////////"
+	    		
 	    		if ( timeslot.location_requests.empty? || timeslot.stop_requests.empty? )
 						puts "timeslot has 0 location_requests or stop requests. timeslot removed."
 						timeslot.destroy
 	    		else     	  	
-						puts "deleteing all records in Location and Stop to reinitialize demo"
-						Location.delete_all
-						Stop.delete_all	
-		  		  
-		  		  puts "saving location_requests to Location"
+		  		  puts "** timeslot locations ****************************************************************"
 		  	  	timeslot.location_requests.find_each do |record|
-		  	  		i = 1
-		  	  		puts "processing timeslot location_request #{i} of #{timeslot.location_requests.count}"
-		  	  		i = i++
+			  			sleep sleep_period
+			  			puts "-----"
+			  			puts "processing new location_request ::::::::::::::::::"
 		  				location = Location.new(
 		  					driver_id: convert_driver_id_to_id(record),
 		  					lat: record.lat,
 		  					lng: record.lng
 		  				)
-		  				location.save if record.valid?
+		  				location.save! if location.valid?
+		  				puts "errors? #{location.errors.full_messages}"
 		  			end
 
-	    	  	timeslot.stop_requests.find_each do |record|
-	    	  		i = 1
-	    	  		puts "processing timeslot stop_request #{i} of #{timeslot.stop_requests.count}"
-	    				i = i++
-	    				stop = Stop.new(
-	    					driver_id: convert_driver_id_to_id(record),
-	    					stop_contact_name: record.stop_contact_name,
-	    					stop_address: record.address,
-	    					client_name: record.client_name,
-	    					stop_type: record.stop_type,
-	    					rickshaw_foreign_id: record.foreign_id,
-	    					scheduled_datetime: Time.at(record.scheduled_time).utc.to_datetime
-	    				)
-		  				if stop.valid?
-		  					stop.create_all_statuses!(record)
-		  					stop.check_stop_uniqueness!(record)
-		  				end
-	    			end
+		  		  puts "** timeslot stops ****************************************************************"
+    	  	 	timeslot.stop_requests.find_each do |record|
+							sleep sleep_period
+							puts "-----"
+							puts "processing new stop_request ::::::::::::::::::"
 
+							stop = Stop.new(
+								driver_id: convert_driver_id_to_id(record),
+								stop_contact_name: record.stop_contact_name,
+								client_name: record.client_name,
+								stop_type: record.stop_type,
+								stop_address: record.address,
+								rickshaw_foreign_id: record.foreign_id,
+								scheduled_datetime: Time.at(record.scheduled_time).to_datetime
+							)
+							driver_info_complete? record
+							convert_driver_id_to_id record 
+							if stop.valid?
+								stop_unique?(record, stop)
+								stop_statuses(record, stop)
+							end
+							# latitude = stop.latitude
+							# longitude = stop.longitude
+							# stop.has_coordinates? latitude, longitude
+							stop.save! 
+							puts "errors? #{stop.errors.full_messages}"							
+	    			end
 	    		end
-	    		
 	    	end
 	    end
   	end
