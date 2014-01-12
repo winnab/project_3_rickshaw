@@ -14,5 +14,5 @@
 //= require jquery_ujs
 //= require handlebars
 //= require underscore
-//= require_tree .
+// = require_tree .
 

@@ -1,23 +1,48 @@
-#map-wrapper{
-  width: 100%;
-  height: 100%;
-  position: relative;
+* {
+  -webkit-border-box: border-box;
+  -moz-border-box: border-box;
+  border-box: border-box;
 }
 
-#borders{
-  width: 100%;
-  height: 100%;
-  z-index: 2;
-  position: absolute;
-  border-top: 25px solid rgba(255, 255, 255, 0.7);
-  border-left: 25px solid rgba(255, 255, 255, 0.7);
+#map-wrapper{
+  width: 100% !important;
+  height: 100% !important;
+  position: relative;
 }
 
 #left-nav{
   margin: 0;
+  padding: 0;
   height: 100%;
+  z-index: 10;
+  position: absolute;
+  overflow: hidden;
+
+}
+
+#nav-inner-wrapper{
+  width: 100% !important;
+  height: 100% !important;
+  position: relative;
+  overflow: hidden;
+}
+
+#nav-content{
+  width: 100% !important;
+  height: 100% !important;
+  position: relative;
   overflow: scroll;
-  z-index: 3;
+  z-index: 10;
+  position: absolute;
+}
+
+#nav-border{
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  z-index: 1;
+  border-left: 25px solid rgba(255, 255, 255, 0.7);
   position: absolute;
 }
 

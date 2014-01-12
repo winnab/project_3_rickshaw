@@ -41,17 +41,22 @@
           </div>
 
     #map-wrapper
-      #borders
-      #left-nav.go-left.quarter-width
-        / logo and buttons
-        #top-box.row
-          .logo.go-left
-          .spacer.go-left
-          .btns.go-left.show-all-drivers
-          .btns.go-left.refresh
-        / active drivers
-        .text-section-spacer.section-spacer
-          #active-drivers.row
-          #inactive-drivers.row
       #map-canvas
-        
+      #left-nav.go-left.quarter-width
+        #nav-inner-wrapper
+          #nav-border
+          #nav-content
+            / logo and buttons
+            #top-box.row
+              .logo.go-left
+              .spacer.go-left
+              .btns.go-left.show-all-drivers
+              .btns.go-left.refresh
+            / drivers
+            .text-section-spacer.section-spacer
+              #active-drivers.row
+            .text-section-spacer.section-spacer
+              #inactive-drivers.row
+         
+      
+      

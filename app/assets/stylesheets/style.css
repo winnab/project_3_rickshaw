@@ -124,60 +124,8 @@ textarea{
     Dashboard layout, grid
     ========================================================================== */
 
-.row{
-  margin: 0;
-  padding: 0;
-}
 
-.row:before,
-.row:after {
-  content: " ";
-  display: table;
-}
-.row:after {
-  clear: both;
-}
 
-.go-left{
-    float: left;
-}
-
-.go-right{
-    float: right;
-}
-
-.col-one-of-four{
-  min-width: 360;
-  max-width: 25%;
-  float: left;
-  position: relative;
-  min-height: 1px;
-}
-
-.col-three-of-four{
-  max-width: 75%;
-  float: left;
-  position: relative;
-  min-height: 1px;
-}
-
-.col-one-of-five{
-  width: 20%;
-  float: left;
-  position: relative;
-  min-height: 1px;
-}
-
-.col-four-of-five{
-  width: 80%;
-  float: left;
-  position: relative;
-  min-height: 1px;
-}
-
-.done{
-  opacity: 0.60;
-}
 
 /* ==========================================================================
    Helper classes

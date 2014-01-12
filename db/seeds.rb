@@ -1,133 +1,425 @@
+Timeslot.destroy_all;
+LocationRequest.destroy_all;
+StopRequest.destroy_all;
+
+timeslot1 = Timeslot.new;
+timeslot2 = Timeslot.new;
+timeslot3 = Timeslot.new;
+
+StopRequest.create!(
+	timeslot_id: 1,
+	status: "done_ok sched_ok",
+	scheduled_time: 1389310357,
+	stop_contact_name: "Nitin Shantharam",
+	address: "850 Jones St, San Francisco",
+	client_name: "swapbox",
+	foreign_id: "vFr0ofFP-eU",
+	scheduled_status: nil,
+	job_status: nil,
+	stop_type: "dropoff",
+	username: "john",
+	driver_id: nil,
+	stop_key: "20140109_nitin_shantharam850_jones_st_san_franciscoswapboxdropoff");
+
+StopRequest.create!(
+	timeslot_id: 1,
+	status: "done_ok sched_ok",
+	scheduled_time: 1389327527,
+	stop_contact_name: "kathykupinska@gmail.com",
+	address: "1439 Lawton St",
+	client_name: "prim",
+	foreign_id: "JKFX",
+	scheduled_status: nil,
+	job_status: nil,
+	stop_type: "pickup",
+	username: "john",
+	driver_id: nil,
+	stop_key: "20140110_kathykupinska_gmail_com1439_lawton_stprimpickup");
+
+StopRequest.create!(
+	timeslot_id: 1,
+	status: "done_ok sched_ok",
+	scheduled_time: 1389326328,
+	stop_contact_name: "chelsea.grate@gmail.com",
+	address: "1260 Clay Street, San Francisco, CA, United States",
+	client_name: "prim",
+	foreign_id: "XXA9",
+	scheduled_status: nil,
+	job_status: nil,
+	stop_type: "dropoff",
+	username: "wale",
+	driver_id: nil,
+	stop_key: "20140110_chelsea_grate_gmail_com1260_clay_street_san_francisco_ca_united_statesprimdropoff");
+
+StopRequest.create!(
+	timeslot_id: 1,
+	status: "overdue sched_ok",
+	scheduled_time: 1389325986,
+	stop_contact_name: "shazen23@gmail.com",
+	address: "1462 Clay Street, San Francisco, CA, United States",
+	client_name: "prim",
+	foreign_id: "7GVD",
+	scheduled_status: nil,
+	job_status: nil,
+	stop_type: "pickup",
+	username: "wale",
+	driver_id: nil,
+	stop_key: "20140110_shazen23_gmail_com1462_clay_street_san_francisco_ca_united_statesprimpickup");
+
+StopRequest.create!(
+	timeslot_id: 1,
+	status: "overdue sched_ok",
+	scheduled_time: 1389328249,
+	stop_contact_name: "jwalter@sleeptrain.com",
+	address: "3251 20th Avenue, Space 101 San Francisco CA 94132",
+	client_name: "prim",
+	foreign_id: "ATAB",
+	scheduled_status: nil,
+	job_status: nil,
+	stop_type: "pickup",
+	username: "john",
+	driver_id: nil,
+	stop_key: "20140110_jwalter_sleeptrain_com3251_20th_avenue_space_101_san_francisco_ca_94132primpickup");
+
+StopRequest.create!(
+	timeslot_id: 1,
+	status: "overdue sched_bad",
+	scheduled_time: 1389322905,
+	stop_contact_name: "richcarla@gmail.com",
+	address: "101 27th Street, San Francisco, CA, United States",
+	client_name: "prim",
+	foreign_id: "YSSK",
+	scheduled_status: nil,
+	job_status: nil,
+	stop_type: "dropoff",
+	username: "john",
+	driver_id: nil,
+	stop_key: "20140110_richcarla_gmail_com101_27th_street_san_francisco_ca_united_statesprimdropoff");
+
+StopRequest.create!(
+	timeslot_id: 1,
+	status: "overdue sched_ok",
+	scheduled_time: 1389285938,
+	stop_contact_name: "cfraher7@gmail.com",
+	address: "1260 Golden Gate Avenue, San Francisco, CA",
+	client_name: "prim",
+	foreign_id: "NGYM",
+	scheduled_status: nil,
+	job_status: nil,
+	stop_type: "pickup",
+	username: "wale",
+	driver_id: nil,
+	stop_key: "20140109_cfraher7_gmail_com1260_golden_gate_avenue_san_francisco_caprimpickup");
+
+StopRequest.create!(
+	timeslot_id: 2,
+	status: "overdue sched_bad",
+	scheduled_time: 1389288917,
+	stop_contact_name: "truebe@gmail.com",
+	address: "925 Guerrero Street, San Francisco, CA",
+	client_name: "prim",
+	foreign_id: "SUHP",
+	scheduled_status: nil,
+	job_status: nil,
+	stop_type: "pickup",
+	username: "wale",
+	driver_id: nil,
+	stop_key: "20140109_truebe_gmail_com925_guerrero_street_san_francisco_caprimpickup");
+
+StopRequest.create!(
+	timeslot_id: 2,
+	status: "done_ok sched_ok",
+	scheduled_time: 1389325986,
+	stop_contact_name: "shazen23@gmail.com",
+	address: "1462 Clay Street, San Francisco, CA, United States",
+	client_name: "prim",
+	foreign_id: "7GVD",
+	scheduled_status: nil,
+	job_status: nil,
+	stop_type: "pickup",
+	username: "wale",
+	driver_id: nil,
+	stop_key: "20140110_shazen23_gmail_com1462_clay_street_san_francisco_ca_united_statesprimpickup");
+
+StopRequest.create!(
+	timeslot_id: 2,
+	status: "done_late sched_ok",
+	scheduled_time: 1389328249,
+	stop_contact_name: "jwalter@sleeptrain.com",
+	address: "3251 20th Avenue, Space 101 San Francisco CA 94132",
+	client_name: "prim",
+	foreign_id: "ATAB",
+	scheduled_status: nil,
+	job_status: nil,
+	stop_type: "pickup",
+	username: "john",
+	driver_id: nil,
+	stop_key: "20140110_jwalter_sleeptrain_com3251_20th_avenue_space_101_san_francisco_ca_94132primpickup");
+
+StopRequest.create!(
+	timeslot_id: 2,
+	status: "done_ok sched_bad",
+	scheduled_time: 1389322905,
+	stop_contact_name: "richcarla@gmail.com",
+	address: "101 27th Street, San Francisco, CA, United States",
+	client_name: "prim",
+	foreign_id: "YSSK",
+	scheduled_status: nil,
+	job_status: nil,
+	stop_type: "dropoff",
+	username: "john",
+	driver_id: nil,
+	stop_key: "20140110_richcarla_gmail_com101_27th_street_san_francisco_ca_united_statesprimdropoff");
+
+StopRequest.create!(
+	timeslot_id: 2,
+	status: "done_late sched_ok",
+	scheduled_time: 1389285938,
+	stop_contact_name: "cfraher7@gmail.com",
+	address: "1260 Golden Gate Avenue, San Francisco, CA",
+	client_name: "prim",
+	foreign_id: "NGYM",
+	scheduled_status: nil,
+	job_status: nil,
+	stop_type: "pickup",
+	username: "wale",
+	driver_id: nil,
+	stop_key: "20140109_cfraher7_gmail_com1260_golden_gate_avenue_san_francisco_caprimpickup");
+
+StopRequest.create!(
+	timeslot_id: 2,
+	status: "done_ok sched_bad",
+	scheduled_time: 1389325168,
+	stop_contact_name: "bradleybuda@gmail.com",
+	address: "144 Parnassus Avenue, Apt 10, San Francisco, CA",
+	client_name: "prim",
+	foreign_id: "XP9N",
+	scheduled_status: nil,
+	job_status: nil,
+	stop_type: "dropoff",
+	username: "john",
+	driver_id: nil,
+	stop_key: "20140110_bradleybuda_gmail_com144_parnassus_avenue_apt_10_san_francisco_caprimdropoff");
+
+StopRequest.create!(
+	timeslot_id: 2,
+	status: "missed sched_bad",
+	scheduled_time: 1389288917,
+	stop_contact_name: "truebe@gmail.com",
+	address: "925 Guerrero Street, San Francisco, CA",
+	client_name: "prim",
+	foreign_id: "SUHP",
+	scheduled_status: nil,
+	job_status: nil,
+	stop_type: "pickup",
+	username: "wale",
+	driver_id: nil,
+	stop_key: "20140109_truebe_gmail_com925_guerrero_street_san_francisco_caprimpickup");
+
+StopRequest.create!(
+	timeslot_id: 3,
+	status: "sched_ok",
+	scheduled_time: 1389310357,
+	stop_contact_name: "Nitin Shantharam",
+	address: "850 Jones St, San Francisco",
+	client_name: "swapbox",
+	foreign_id: "vFr0ofFP-eU",
+	scheduled_status: nil,
+	job_status: nil,
+	stop_type: "dropoff",
+	username: "john",
+	driver_id: nil,
+	stop_key: "20140109_nitin_shantharam850_jones_st_san_franciscoswapboxdropoff");
+
+StopRequest.create!(
+	timeslot_id: 3,
+	status: "sched_bad",
+	scheduled_time: 1389322905,
+	stop_contact_name: "richcarla@gmail.com",
+	address: "101 27th Street, San Francisco, CA, United States",
+	client_name: "prim",
+	foreign_id: "YSSK",
+	scheduled_status: nil,
+	job_status: nil,
+	stop_type: "dropoff",
+	username: "john",
+	driver_id: nil,
+	stop_key: "20140110_richcarla_gmail_com101_27th_street_san_francisco_ca_united_statesprimdropoff");
+
+StopRequest.create!(
+	timeslot_id: 3,
+	status: "sched_ok",
+	scheduled_time: 1389326328,
+	stop_contact_name: "chelsea.grate@gmail.com",
+	address: "1260 Clay Street, San Francisco, CA, United States",
+	client_name: "prim",
+	foreign_id: "XXA9",
+	scheduled_status: nil,
+	job_status: nil,
+	stop_type: "dropoff",
+	username: "wale",
+	driver_id: nil,
+	stop_key: "20140110_chelsea_grate_gmail_com1260_clay_street_san_francisco_ca_united_statesprimdropoff");
+
+StopRequest.create!(
+	timeslot_id: 3,
+	status: "sched_ok",
+	scheduled_time: 1389325986,
+	stop_contact_name: "shazen23@gmail.com",
+	address: "1462 Clay Street, San Francisco, CA, United States",
+	client_name: "prim",
+	foreign_id: "7GVD",
+	scheduled_status: nil,
+	job_status: nil,
+	stop_type: "pickup",
+	username: "wale",
+	driver_id: nil,
+	stop_key: "20140110_shazen23_gmail_com1462_clay_street_san_francisco_ca_united_statesprimpickup");
+
+StopRequest.create!(
+	timeslot_id: 3,
+	status: "sched_ok",
+	scheduled_time: 1389328249,
+	stop_contact_name: "jwalter@sleeptrain.com",
+	address: "3251 20th Avenue, Space 101 San Francisco CA 94132",
+	client_name: "prim",
+	foreign_id: "ATAB",
+	scheduled_status: nil,
+	job_status: nil,
+	stop_type: "pickup",
+	username: "john",
+	driver_id: nil,
+	stop_key: "20140110_jwalter_sleeptrain_com3251_20th_avenue_space_101_san_francisco_ca_94132primpickup");
+
+StopRequest.create!(
+	timeslot_id: 3,
+	status: "sched_ok",
+	scheduled_time: 1389285938,
+	stop_contact_name: "cfraher7@gmail.com",
+	address: "1260 Golden Gate Avenue, San Francisco, CA",
+	client_name: "prim",
+	foreign_id: "NGYM",
+	scheduled_status: nil,
+	job_status: nil,
+	stop_type: "pickup",
+	username: "wale",
+	driver_id: nil,
+	stop_key: "20140109_cfraher7_gmail_com1260_golden_gate_avenue_san_francisco_caprimpickup");
+
+StopRequest.create!(
+	timeslot_id: 3,
+	status: "sched_bad",
+	scheduled_time: 1389288917,
+	stop_contact_name: "truebe@gmail.com",
+	address: "925 Guerrero Street, San Francisco, CA",
+	client_name: "prim",
+	foreign_id: "SUHP",
+	scheduled_status: nil,
+	job_status: nil,
+	stop_type: "pickup",
+	username: "wale",
+	driver_id: nil,
+	stop_key: "20140109_truebe_gmail_com925_guerrero_street_san_francisco_caprimpickup");
+
+StopRequest.create!(
+	timeslot_id: 3,
+	status: "sched_bad",
+	scheduled_time: 1389325168,
+	stop_contact_name: "bradleybuda@gmail.com",
+	address: "144 Parnassus Avenue, Apt 10, San Francisco, CA",
+	client_name: "prim",
+	foreign_id: "XP9N",
+	scheduled_status: nil,
+	job_status: nil,
+	stop_type: "dropoff",
+	username: "john",
+	driver_id: nil,
+	stop_key: "20140110_bradleybuda_gmail_com144_parnassus_avenue_apt_10_san_francisco_caprimdropoff");
+
+StopRequest.create!(
+	timeslot_id: 3,
+	status: "sched_ok",
+	scheduled_time: 1389327527,
+	stop_contact_name: "kathykupinska@gmail.com",
+	address: "1439 Lawton St",
+	client_name: "prim",
+	foreign_id: "JKFX",
+	scheduled_status: nil,
+	job_status: nil,
+	stop_type: "pickup",
+	username: "john",
+	driver_id: nil,
+	stop_key: "20140110_kathykupinska_gmail_com1439_lawton_stprimpickup");
 
 
+LocationRequest.create!( timeslot_id: timeslot1.id, username: 'wale', lat:	37.47581, lng: -122.24988 );
+LocationRequest.create!( timeslot_id: timeslot1.id, username: 'wale', lat:	37.47572, lng: -122.24964 );
+LocationRequest.create!( timeslot_id: timeslot1.id, username: 'wale', lat:	37.47482, lng: -122.24947 );
+LocationRequest.create!( timeslot_id: timeslot1.id, username: 'wale', lat:	37.47474, lng: -122.24955 );
+LocationRequest.create!( timeslot_id: timeslot1.id, username: 'wale', lat:	37.47462, lng: -122.25041 );
+LocationRequest.create!( timeslot_id: timeslot1.id, username: 'wale', lat:	37.47458, lng: -122.25044 );
+LocationRequest.create!( timeslot_id: timeslot1.id, username: 'wale', lat:	37.47407, lng: -122.25034 );
+LocationRequest.create!( timeslot_id: timeslot1.id, username: 'wale', lat:	37.47404, lng: -122.25038 );
+LocationRequest.create!( timeslot_id: timeslot1.id, username: 'wale', lat:	37.47342, lng: -122.25512 );
+LocationRequest.create!( timeslot_id: timeslot1.id, username: 'wale', lat:	37.47332, lng: -122.25527 );
+LocationRequest.create!( timeslot_id: timeslot1.id, username: 'wale', lat:	37.46902, lng: -122.25437 );
 
-Driver.destroy_all
-Location.destroy_all
-Stop.destroy_all
+LocationRequest.create!( timeslot_id: timeslot2.id, username: 'wale', lat:	37.46892, lng: -122.25450 );
+LocationRequest.create!( timeslot_id: timeslot2.id, username: 'wale', lat:	37.46820, lng: -122.26019 );
+LocationRequest.create!( timeslot_id: timeslot2.id, username: 'wale', lat:	37.46814, lng: -122.26026 );
+LocationRequest.create!( timeslot_id: timeslot2.id, username: 'wale', lat:	37.46764, lng: -122.26016 );
+LocationRequest.create!( timeslot_id: timeslot2.id, username: 'wale', lat:	37.46763, lng: -122.26011 );
+LocationRequest.create!( timeslot_id: timeslot2.id, username: 'wale', lat:	37.46778, lng: -122.25884 );
+LocationRequest.create!( timeslot_id: timeslot2.id, username: 'wale', lat: 37.46782, lng: -122.25874 );
+LocationRequest.create!( timeslot_id: timeslot2.id, username: 'wale', lat: 37.46813, lng: -122.25629 );
+LocationRequest.create!( timeslot_id: timeslot2.id, username: 'wale', lat: 37.46807, lng: -122.25622 );
+LocationRequest.create!( timeslot_id: timeslot2.id, username: 'wale', lat: 37.46257, lng: -122.25513 );
+LocationRequest.create!( timeslot_id: timeslot2.id, username: 'wale', lat: 37.46252, lng: -122.25507 );
 
-d_driver = Driver.create!({ username: "Divya" })
-g_driver = Driver.create!({ username: "Gautam" })
-w_driver = Driver.create!({ username: "Winna" })
-m_driver = Driver.create!({ username: "Murph" })
+LocationRequest.create!( timeslot_id: timeslot3.id, username: 'wale', lat: 37.46248, lng: -122.25503 );
+LocationRequest.create!( timeslot_id: timeslot3.id, username: 'wale', lat: 37.46240, lng: -122.25495 );
+LocationRequest.create!( timeslot_id: timeslot3.id, username: 'wale', lat: 37.46202, lng: -122.25481 );
+LocationRequest.create!( timeslot_id: timeslot3.id, username: 'wale', lat: 37.45317, lng: -122.25396 );
+LocationRequest.create!( timeslot_id: timeslot3.id, username: 'wale', lat: 37.45311, lng: -122.25392 );
+LocationRequest.create!( timeslot_id: timeslot3.id, username: 'wale', lat: 37.45315, lng: -122.25389 );
+LocationRequest.create!( timeslot_id: timeslot3.id, username: 'wale', lat: 37.45381, lng: -122.25397 );
 
+LocationRequest.create!( timeslot_id: timeslot1.id, username: 'wale', lat: 37.7719822, lng: -122.4243946,  driver_id: nil);
+LocationRequest.create!( timeslot_id: timeslot1.id, username: 'john', lat: 37.7866281, lng: -122.4419452,  driver_id: nil);
+LocationRequest.create!( timeslot_id: timeslot1.id, username: 'wale', lat: 37.7719963, lng: -122.4244801,  driver_id: nil);
+LocationRequest.create!( timeslot_id: timeslot1.id, username: 'wale', lat: 37.7694106, lng: -122.4114774,  driver_id: nil);
+LocationRequest.create!( timeslot_id: timeslot1.id, username: 'john', lat: 37.7428071, lng: -122.4005083,  driver_id: nil);
+LocationRequest.create!( timeslot_id: timeslot1.id, username: 'wale', lat: 37.7605733, lng: -122.4065402,  driver_id: nil);
+LocationRequest.create!( timeslot_id: timeslot1.id, username: 'wale', lat: 37.7495068, lng: -122.4045604,  driver_id: nil);
+LocationRequest.create!( timeslot_id: timeslot1.id, username: 'wale', lat: 37.75064,   lng: -122.420193,   driver_id: nil);
+LocationRequest.create!( timeslot_id: timeslot1.id, username: 'wale', lat: 37.7404883, lng: -122.40699,    driver_id: nil);
+LocationRequest.create!( timeslot_id: timeslot1.id, username: 'wale', lat: 37.7383726, lng: -122.4069335,  driver_id: nil);
 
-(1..15).each do |i|
-	Stop.create!({
-		driver_id: rand(19..22),
-		job_status: 'done_ok',
-		scheduled_datetime: DateTime.now + (i - 100).seconds,
-		stop_contact_name: [ 'Jamie', 'Daida', 'Rob', 'Jack', 'Jonny', 'Adam', 'Neha', 'Maloney', 'Sharif', 'Oli', 'Sophie', 'Alex', 'Rob', 'Selina'].sample,
-		stop_address: ['935 Folsom at 5th Street, CA',
-			'1340 Powell Street at Broadway, CA',
-			'1067 Post Street at Polk Street, CA',
-			'1301 Turk Street at Webster Street, CA',
-			'135 Sanchez Street at Henry Street, CA',
-			'2300 Folsom Street at 19th Street, CA',
-			'36 Bluxome Street at 4th Street, CA',
-			'2245 Jerrold Avenue at Upton Street, CA',
-			'655 Presidio Avenue at Bush Street, CA',
-			'3880 26th Street at Church Street, CA',
-			'1145 Stanyan Street at Grattan Street, CA',
-			'530 Sansome Street at Washington Street, CA',
-			'551 26th Avenue at Geary Boulevard, CA',
-			'1000 Ocean Avenue at Phelan Avenue, CA',
-			'2251 Greenwich Street at Fillmore Street, CA',
-			'1295 Shafter Avenue at Ingalls Street, CA',
-			'1935 32nd Avenue at Ortega Street, CA',
-			'390 Buckingham Way at Winston Street, CA',
-			'285 Olympia Way at Clarendon Avenue, CA',
-			'1443 Grove Street at Broderick Street, CA',
-			'1290 16th Avenue at Irving Street, CA',
-			'1348 45th Avenue at Judah Street, CA',
-			'100 Hoffman Avenue at Alvarado Street, CA',
-			'3305 3rd Street at Cargo Way, CA',
-			'80 Digby Street at Addison Street, CA',
-			'1814 Stockton Street at Greenwich Street, CA',
-			'299 Vermont Street at 16th Street, CA',
-			'441 12th Avenue at Geary Boulevard, CA',
-			'194 Park Street at Holly Park Circle, CA',
-			'8 Capital Street at Broad Street, CA',
-			'499 41st Avenue at Geary Boulevard, CA',
-			'Pier 22½, The Embarcadero at Harrison Street, CA',
-			'109 Oak Street at Franklin Street, CA',
-			'798 Wisconsin Street at 22nd Street, CA',
-			'2150 California Street at Laguna Street, CA',
-			'1091 Portola Drive at Miraloma Drive, CA',
-			'2155 18th Avenue at Rivera Street, CA',
-			'1325 Leavenworth Street at Jackson Street, CA',
-			'2430 San Bruno Avenue at Silver Avenue, CA',
-			'720 Moscow Street at France Avenue, CA',
-			'1298 Girard Street at Wilde Avenue, CA',
-			'849 Avenue D, Bldg. 157 at 10th Street, Treasure Island, CA',
-			'1415 Evans Avenue at Mendell Street, CA',
-			'218 Lincoln Blvd at Keyes Avenue, CA'].sample,
-		client_name: ['Albertandeve', 'Prim'].sample,
-		stop_type: ['pickup', 'dropoff'].sample });
-end
+LocationRequest.create!( timeslot_id: timeslot2.id, username: 'wale', lat: 37.738546,  lng: -122.4054287,  driver_id: nil);
+LocationRequest.create!( timeslot_id: timeslot2.id, username: 'wale', lat: 37.7385167, lng: -122.4054749,  driver_id: nil);
+LocationRequest.create!( timeslot_id: timeslot2.id, username: 'wale', lat: 37.7382975, lng: -122.4060605,  driver_id: nil);
+LocationRequest.create!( timeslot_id: timeslot2.id, username: 'wale', lat: 37.7350847, lng: -122.4106167,  driver_id: nil);
+LocationRequest.create!( timeslot_id: timeslot2.id, username: 'wale', lat: 37.7347572, lng: -122.4116097,  driver_id: nil);
+LocationRequest.create!( timeslot_id: timeslot2.id, username: 'john', lat: 37.7349728, lng: -122.4183253,  driver_id: nil);
+LocationRequest.create!( timeslot_id: timeslot2.id, username: 'wale', lat: 37.7487944, lng: -122.4233492,  driver_id: nil);
+LocationRequest.create!( timeslot_id: timeslot2.id, username: 'john', lat: 37.7438021, lng: -122.4048002,  driver_id: nil);
+LocationRequest.create!( timeslot_id: timeslot2.id, username: 'john', lat: 37.7382829, lng: -122.4059961,  driver_id: nil);
 
+LocationRequest.create!( timeslot_id: timeslot2.id, username: 'wale', lat: 37.7535026, lng: -122.4230579,  driver_id: nil);
+LocationRequest.create!( timeslot_id: timeslot2.id, username: 'john', lat: 37.771971,  lng: -122.4244381,  driver_id: nil);
+LocationRequest.create!( timeslot_id: timeslot2.id, username: 'john', lat: 37.7509222, lng: -122.4200682,  driver_id: nil);
+LocationRequest.create!( timeslot_id: timeslot2.id, username: 'wale', lat: 37.7488051, lng: -122.4227874,  driver_id: nil);
+LocationRequest.create!( timeslot_id: timeslot2.id, username: 'john', lat: 37.765329,  lng: -122.4939657,  driver_id: nil);
+LocationRequest.create!( timeslot_id: timeslot2.id, username: 'john', lat: 37.768121,  lng: -122.4612033,  driver_id: nil);
+LocationRequest.create!( timeslot_id: timeslot2.id, username: 'wale', lat: 37.7805973, lng: -122.4039142,  driver_id: nil);
+LocationRequest.create!( timeslot_id: timeslot2.id, username: 'wale', lat: 37.7535542, lng: -122.4230719,  driver_id: nil);
+LocationRequest.create!( timeslot_id: timeslot2.id, username: 'john', lat: 37.7626672, lng: -122.4203323,  driver_id: nil);
+LocationRequest.create!( timeslot_id: timeslot2.id, username: 'john', lat: 37.7602441, lng: -122.4724732,  driver_id: nil);
+LocationRequest.create!( timeslot_id: timeslot2.id, username: 'john', lat: 37.7720409, lng: -122.4244439,  driver_id: nil);
+LocationRequest.create!( timeslot_id: timeslot2.id, username: 'wale', lat: 37.7720631, lng: -122.4243637,  driver_id: nil);
+LocationRequest.create!( timeslot_id: timeslot2.id, username: 'john', lat: 37.7485253, lng: -122.4603527,  driver_id: nil);
+LocationRequest.create!( timeslot_id: timeslot2.id, username: 'john', lat: 37.7720281, lng: -122.4243742,  driver_id: nil);
 
-
-(1..15).each do |i|
-	Stop.create!({
-		driver_id: rand(19..22),
-		scheduled_datetime: DateTime.now + (i * 100).seconds,
-		stop_contact_name: ['Jamie', 'Daida', 'Rob', 'Jack'].sample,
-		stop_address: 
-		['935 Folsom at 5th Street, CA',
-			'1340 Powell Street at Broadway, CA',
-			'1067 Post Street at Polk Street, CA',
-			'1301 Turk Street at Webster Street, CA',
-			'135 Sanchez Street at Henry Street, CA',
-			'2300 Folsom Street at 19th Street, CA',
-			'36 Bluxome Street at 4th Street, CA',
-			'2245 Jerrold Avenue at Upton Street, CA',
-			'655 Presidio Avenue at Bush Street, CA',
-			'3880 26th Street at Church Street, CA',
-			'1145 Stanyan Street at Grattan Street, CA',
-			'530 Sansome Street at Washington Street, CA',
-			'551 26th Avenue at Geary Boulevard, CA',
-			'1000 Ocean Avenue at Phelan Avenue, CA',
-			'2251 Greenwich Street at Fillmore Street, CA',
-			'1295 Shafter Avenue at Ingalls Street, CA',
-			'1935 32nd Avenue at Ortega Street, CA',
-			'390 Buckingham Way at Winston Street, CA',
-			'285 Olympia Way at Clarendon Avenue, CA',
-			'1443 Grove Street at Broderick Street, CA',
-			'1290 16th Avenue at Irving Street, CA',
-			'1348 45th Avenue at Judah Street, CA',
-			'100 Hoffman Avenue at Alvarado Street, CA',
-			'3305 3rd Street at Cargo Way, CA',
-			'80 Digby Street at Addison Street, CA',
-			'1814 Stockton Street at Greenwich Street, CA',
-			'299 Vermont Street at 16th Street, CA',
-			'441 12th Avenue at Geary Boulevard, CA',
-			'194 Park Street at Holly Park Circle, CA',
-			'8 Capital Street at Broad Street, CA',
-			'499 41st Avenue at Geary Boulevard, CA',
-			'Pier 22½, The Embarcadero at Harrison Street, CA',
-			'109 Oak Street at Franklin Street, CA',
-			'798 Wisconsin Street at 22nd Street, CA',
-			'2150 California Street at Laguna Street, CA',
-			'1091 Portola Drive at Miraloma Drive, CA',
-			'2155 18th Avenue at Rivera Street, CA',
-			'1325 Leavenworth Street at Jackson Street, CA',
-			'2430 San Bruno Avenue at Silver Avenue, CA',
-			'720 Moscow Street at France Avenue, CA',
-			'1298 Girard Street at Wilde Avenue, CA',
-			'849 Avenue D, Bldg. 157 at 10th Street, Treasure Island, CA',
-			'1415 Evans Avenue at Mendell Street, CA',
-			'218 Lincoln Blvd at Keyes Avenue, CA'].sample,
-		client_name: ['Albertandeve', 'Prim'].sample,
-		stop_type: ['pickup', 'dropoff'].sample
-		});
-end
-
-(1..200).each do |i|
-	Location.create!({
-		driver_id: rand(19..22),
-		lat: [37.79567779417, 37.7762932842937, 37.7857338084653, 37.7921505613557, 37.7910208429028, 37.7736443572994, 37.7945354105227, 37.7357241811434, 37.7899962614841, 37.7899962614841, 37.7899962614841, 37.7590705667859, 37.7678552815667, 37.7295235245486, 37.7523621271745, 37.7517687410633, 37.7519672224793, 37.781151017376, 37.7664968242361, 37.7664968242361, 37.7862638517202, 37.7862638517202, 37.7974870787045, 37.7668539945814, 37.7306290211541, 37.7227460610217, 37.7425049478128, 37.7571935748029, 37.7703623329026, 37.7600869434886, 37.7384905778358, 37.7360347559499, 37.7413290493651, 37.7428418599748, 37.7428316286211, 37.7428418599748, 37.7428316286211, 37.7458538311266, 37.7412149967948, 37.7965048812179, 37.7284706007525, 37.773031887172, 37.8016557691048, 37.7438659230114, 37.7432980409519, 37.7490536136862, 37.795234985813, 37.7894876307586, 37.7752283190824, 37.7770951827125, 37.7922616467435, 37.7951565603101, 37.7887191794852, 37.8077472720977, 37.7912386320311, 37.7852917604584, 37.7912424071498, 37.7938715193979, 37.7907674971469, 37.795234985813, 37.8042746432715, 37.7776699186282, 37.7185827498128, 37.7185827498128, 37.7185827498128, 37.7185827498128, 37.7910394501553, 37.7635827301267, 37.7884892652385, 37.7637078534979, 37.7158533053, 37.7691122191912, 37.749742728721, 37.7551119139755, 37.7953289638402, 37.7802407864928, 37.7483634414203, 37.7425126838326, 37.7535619072605, 37.7495727201228, 37.7901962753817, 37.7814522522296, 37.7814522522296, 37.7753958745594, 37.7913157125243, 37.7915815609141, 37.7521005711272, 37.780392684484, 37.7922174235599, 37.765430601838, 37.7397407299075, 37.7397407299075, 37.7917572183571, 37.7781326218489, 37.7582056654597, 37.7865908294962, 37.7434367769831, 37.7883000784529, 37.7610873715046, 37.7864590495674, 37.7642316253748, 37.7783033737661, 37.7469722263854, 37.7824764526675, 37.7625680100588, 37.7610219755247, 37.7386999122549, 37.7108732352462, 37.7534592993902, 37.7862344248723, 37.7896567411054, 37.7825291046027, 37.799611358652, 37.7609546261689, 37.7636474960478, 37.7931486402131, 37.7849752823949, 37.7257889035827, 37.7271028172581, 37.763294146928, 37.7898032969608, 37.7982959683638, 37.7504562626699, 37.7442513371949, 37.7442513371949, 37.7442513371949, 37.7442513371949, 37.7442513371949, 37.7442513371949, 37.7943741854873, 37.7798032339313, 37.7523819855726, 37.7799354583462, 37.7719856758732, 37.7971610446592, 37.7849378460523, 37.7215293833909, 37.7541041460984, 37.7863167870362, 37.7770478350047, 37.7630343084686, 37.7832112129012, 37.7158428287139, 37.764690963841, 37.7875111714468, 37.759441704593, 37.759441704593, 37.759441704593, 37.7942894753632, 37.7637574027964, 37.7522109052943, 37.7971835001129, 37.716484702676, 37.7777194024627, 37.7897133376122, 37.7608434174759, 37.8029039497662, 37.8029039497662, 37.7556456291434, 37.7574432280493, 37.7935611941695, 37.7746365538652, 37.7630641255688, 37.7958860636907, 37.7578927705959, 37.7514886321863, 37.7406292302474, 37.7746143900598, 37.7746143900598, 37.8001976196166, 37.7333421387267, 37.7737324981563, 37.7543394256753, 37.776613215837, 37.7753805519296, 37.7733104586264, 37.7649293208856, 37.772483694879, 37.7791216836084, 37.7772326490112, 37.7309732726293, 37.7903719097865, 37.7903719097865, 37.780225676913, 37.7514374186742, 37.7514374186742, 37.7514374186742, 37.7514374186742, 37.7757020110437, 37.7297793817557, 37.7416235173124, 37.7719836954701, 37.7517691541633, 37.7854136196839, 37.7854136196839, 37.7317967545067, 37.7769152822896, 37.7613876104809, 37.7765752220946, 37.7592459297539, 37.7592459297539, 37.7592459297539, 37.7896021448088, 37.7927957532489, 37.7772326490112, 37.7704231622085, 37.7737282112104, 37.7939222609214, 37.7731378542423, 37.7731378542423, 37.8057900903436, 37.7805350457348, 37.7731378542423, 37.7731378542423, 37.772535033082, 37.7479435680249, 37.7478089989762, 37.7478089989762, 37.7568745253619, 37.7568745253619, 37.7312822063261, 37.7681797405418, 37.7809162983004, 37.7809162983004, 37.7809162983004, 37.7892345815694, 37.772357034369, 37.7846473760482, 37.7738535569004, 37.7943310161356, 37.792265143252, 37.7708088181603, 37.7621184116335, 37.7201982502992, 37.7679317890339, 37.7493403256177, 37.7846473760482, 37.7720149842167, 37.7510137970899, 37.7759754892827, 37.7588870162831, 37.7450399128553, 37.7450399128553, 37.7556260006721, 37.77558909312, 37.7751435685283, 37.7642349836815, 37.7748242776506, 37.7843222693585, 37.7959829722871, 37.7875875153376, 37.7874316153309, 37.77551856134, 37.7396154156526, 37.7548978586242, 37.747165101789, 37.7635169341594, 37.788497136022, 37.7362542767455, 37.7858195184251, 37.8062671494724, 37.7978323504125, 37.7855159523919, 37.7217046759496, 37.7650167211506, 37.7516381658909, 37.7908113535284, 37.7941188643111, 37.7651437373968, 37.794053196011, 37.7396448782282, 37.7887704836055, 37.7887704836055, 37.7874316153309, 37.7477456462641, 37.7935763832195, 37.7496072985478, 37.7496072985478, 37.7971614002431, 37.7913157125243, 37.7922174235599, 37.7740054193197, 37.7582253342409, 37.7243787418451, 37.7473499125568, 37.7975425477455, 37.7539893822009, 37.787681890673, 37.7528980520432, 37.7905536145443, 37.7533356172681, 37.7558322938534, 37.7448397027037, 37.7448397027037, 37.7923667990737, 37.7884789311249, 37.804445183551, 37.7929737732156, 37.7608421509894, 37.7261051828766, 37.7261051828766, 37.75725843153, 37.7095180160386, 37.7095180160386, 37.7095180160386, 37.7095180160386, 37.7095180160386, 37.7095180160386, 37.7889469633139, 37.7915749276704, 37.788051332007, 37.7479497683946, 37.7541534292353, 37.7863167870362, 37.7764376677825, 37.7563552286554, 37.7153160590284, 37.7153160590284, 37.7898032969608, 37.7384457737571, 37.7647138269019, 37.7647138269019, 37.7825925864059, 37.794053196011, 37.7638172703332, 37.7878878260686, 37.712866209354, 37.712866209354, 37.7988366982774, 37.7921505613557, 37.7975425477455, 37.7420470446839, 37.7643655845362, 37.7605312005361, 37.7306291710891, 37.769443200105, 37.783370751732, 37.7911851129609, 37.7938715193979, 37.7619579236529, 37.7747315991888, 37.7948360622824, 37.7334388226155, 37.7334388226155, 37.7802431494387, 37.7900565969765, 37.785110931896, 37.7921433097376, 37.7517541558444, 37.7517541558444, 37.7704231622085, 37.7586887550237, 37.7342967178083, 37.7781178165362, 37.7423270157261, 37.7812814354611, 37.7233383171435, 37.7320425191077, 37.7755840859423, 37.7809717028382, 37.7896085531011, 37.8007577425516, 37.777348191904, 37.7483394563706, 37.7585032121045, 37.7880716811202, 37.7909353812236, 37.7816560183304, 37.7904851573241, 37.7911212945448, 37.7809980294961, 37.7286847613313, 37.7286847613313, 37.7286847613313, 37.7886601426182, 37.7641632240121, 37.7778851871993, 37.7171750464117, 37.7437635379357, 37.7482969398878, 37.7600403606327, 37.787112224793, 37.785110931896, 37.759330552823, 37.7223114543488, 37.7150291826641, 37.7590396080243, 37.780571638625, 37.7719294138487, 37.7719294138487, 37.7719294138487, 37.7719294138487, 37.7719294138487, 37.7719294138487, 37.7391601669466, 37.7391601669466, 37.7391601669466, 37.7843222693585, 37.7471329412732, 37.7495306367268, 37.7494916274874, 37.7508584907448, 37.7621859877015, 37.788014615012, 37.7417606612753, 37.7889469633139, 37.7677978555502, 37.7662127018019, 37.7894553635651, 37.7932137441705, 37.7907674971469, 37.7101496078403, 37.7779017836433, 37.7260861821044, 37.7260861821044, 37.7260861821044, 37.7294383002222, 37.7593787732486, 37.7593787732486, 37.7593787732486, 37.7593787732486, 37.7593787732486, 37.7627509187303, 37.7813150553222, 37.794053196011, 37.7799355053563, 37.8024102671909, 37.7649507396692, 37.7716000644581, 37.7716000644581, 37.7706233154319, 37.7286777881434, 37.7827748929852, 37.7541043555848, 37.7464872034991, 37.8029022994885, 37.757357759939, 37.7259316986876, 37.7895581848613, 37.7895581848613, 37.7892345815694, 37.7978028042498, 37.7893178710372, 37.7796645848823, 37.7250789452841, 37.7635827301267, 37.7923238154986, 37.7638903725968, 37.7519197604154, 37.7321350495317, 37.7191475582065, 37.7914472005425, 37.7470402277579, 37.7470402277579, 37.7470402277579].sample,
-lng: [-122.4214975332, -122.444474181539, -122.425605443703, -122.393999973668, -122.414779178931, -122.44737431471, -122.416146766003, -122.446668843873, -122.411932009537, -122.411932009537, -122.411932009537, -122.414398699505, -122.422484406562, -122.479519088222, -122.419098922252, -122.419203711244, -122.419118633084, -122.395238446153, -122.453419809742, -122.453419809742, -122.418871304077, -122.418871304077, -122.435296260429, -122.434142157927, -122.401133631329, -122.405190593557, -122.403782735997, -122.4092309001, -122.430633170311, -122.418806483683, -122.398322999904, -122.390592139097, -122.422968384089, -122.474787947214, -122.4750210368, -122.474787947214, -122.4750210368, -122.414003259291, -122.389800943133, -122.42400589468, -122.476825758135, -122.432941806388, -122.404237523535, -122.488973925504, -122.429223763116, -122.426863365388, -122.403606837542, -122.397593410429, -122.417466132973, -122.419252285997, -122.403485955475, -122.402732270467, -122.390454728452, -122.409572061054, -122.396457400441, -122.395565947931, -122.397133398994, -122.394865238488, -122.401632108689, -122.403606837542, -122.444392294257, -122.418871715123, -122.463272924658, -122.463272924658, -122.463272924658, -122.463272924658, -122.415474974735, -122.411750757765, -122.404753148442, -122.406036693233, -122.462315050445, -122.40442437168, -122.437178725422, -122.49435761323, -122.418067004596, -122.47542153608, -122.469837869919, -122.482281033909, -122.407979104547, -122.418533351992, -122.40366380814, -122.452852959547, -122.452852959547, -122.498866800511, -122.401993844883, -122.443688515485, -122.423204194988, -122.47130447506, -122.39816673478, -122.466078818667, -122.483313936785, -122.483313936785, -122.39889763944, -122.46160257071, -122.443163294117, -122.433669041509, -122.488943982778, -122.413713443511, -122.475133821965, -122.405545709691, -122.467576237619, -122.415813752916, -122.41039898807, -122.422042459679, -122.399686586253, -122.410554451211, -122.412273237606, -122.404414486727, -122.499264178773, -122.451608947725, -122.407834341092, -122.479083946005, -122.410460763636, -122.429852949636, -122.492509180099, -122.40256717667, -122.409691405075, -122.385424165552, -122.471502938043, -122.418014320074, -122.389757395412, -122.443002660206, -122.414675180938, -122.441405283203, -122.441405283203, -122.441405283203, -122.441405283203, -122.441405283203, -122.441405283203, -122.417531874952, -122.484264627343, -122.436101146746, -122.431289062112, -122.441174227106, -122.403379231566, -122.402067660515, -122.437607416606, -122.497215991458, -122.422502586298, -122.438600443703, -122.507928854273, -122.49066319066, -122.410268823986, -122.429950685913, -122.404702666239, -122.410179008796, -122.410179008796, -122.410179008796, -122.400784751665, -122.423426727288, -122.429274576082, -122.429475358913, -122.469545712645, -122.42743226804, -122.414146749833, -122.425620338769, -122.444641365644, -122.444641365644, -122.482232456496, -122.504314207834, -122.39948211969, -122.413168874448, -122.434056522595, -122.427820809097, -122.451064582871, -122.426792087321, -122.479074505717, -122.444817931402, -122.444817931402, -122.4273900337, -122.390329417926, -122.43496671781, -122.485408365206, -122.481522611368, -122.421832142063, -122.423045518215, -122.417909343819, -122.420264825315, -122.494011845113, -122.395578064466, -122.441525466224, -122.419659653711, -122.419659653711, -122.390465535503, -122.434380348913, -122.434380348913, -122.434380348913, -122.434380348913, -122.441997057157, -122.387370058311, -122.430055174072, -122.433366708762, -122.475922147997, -122.463158903343, -122.463158903343, -122.392049691615, -122.424350593768, -122.408454306165, -122.43159635678, -122.387917379065, -122.387917379065, -122.387917379065, -122.407459786241, -122.401353281829, -122.395578064466, -122.44496977115, -122.417059857318, -122.404344312931, -122.416098890345, -122.416098890345, -122.413969034599, -122.413211974016, -122.416098890345, -122.416098890345, -122.43987787384, -122.499920859584, -122.400818286066, -122.400818286066, -122.496816959399, -122.496816959399, -122.441354631388, -122.429810148412, -122.406481628901, -122.406481628901, -122.406481628901, -122.404042172352, -122.507072009583, -122.486472738231, -122.46434918333, -122.395811054956, -122.392847515015, -122.431073504345, -122.50034063654, -122.448891205887, -122.421901934791, -122.389397286198, -122.486472738231, -122.405193212965, -122.42191132824, -122.443257288586, -122.407241128625, -122.413025014003, -122.413025014003, -122.41798574012, -122.397976908575, -122.495457905669, -122.456228381384, -122.479257618092, -122.469079802909, -122.403077274786, -122.390471541255, -122.404371429682, -122.394228408315, -122.476789020185, -122.483713719794, -122.420881785449, -122.453874968773, -122.403893080682, -122.389384964222, -122.414428793657, -122.421340532885, -122.400633937038, -122.46427826281, -122.43671660102, -122.469271151719, -122.432440715526, -122.406928325107, -122.418340589887, -122.47812969527, -122.397347692879, -122.418870852307, -122.401188434222, -122.401188434222, -122.404371429682, -122.430311492756, -122.421585474641, -122.431331870409, -122.431331870409, -122.42173592909, -122.401993844883, -122.39816673478, -122.415235199702, -122.486757026673, -122.460961036029, -122.436855588643, -122.43031620729, -122.412413002877, -122.4338559117, -122.41027212169, -122.40739149724, -122.424956189331, -122.46714053506, -122.461366914404, -122.461366914404, -122.400148306322, -122.402971703887, -122.411947682232, -122.418152009415, -122.442563920317, -122.422306915843, -122.422306915843, -122.418604510115, -122.439895986431, -122.439895986431, -122.439895986431, -122.439895986431, -122.439895986431, -122.439895986431, -122.401288263137, -122.393390120293, -122.419862485525, -122.416117855127, -122.484341723028, -122.422502586298, -122.478317008191, -122.42635906035, -122.402485890016, -122.402485890016, -122.389757395412, -122.500982008317, -122.421602406135, -122.421602406135, -122.5045749102, -122.397347692879, -122.446037501797, -122.406133818883, -122.435868007626, -122.435868007626, -122.442111443312, -122.393999973668, -122.43031620729, -122.474879837793, -122.440356305799, -122.498686586623, -122.377093143124, -122.422623157125, -122.405068815474, -122.391790956268, -122.394865238488, -122.4654651409, -122.465650414771, -122.403526897612, -122.380467551319, -122.380467551319, -122.474610048428, -122.400783097202, -122.407422670904, -122.398896722251, -122.504576664542, -122.504576664542, -122.44496977115, -122.407222270656, -122.434175071557, -122.442172593959, -122.431976961466, -122.408705050727, -122.393273255722, -122.458791017717, -122.413028591237, -122.458524571291, -122.422614012879, -122.430910970922, -122.404653901613, -122.477568730258, -122.416065647361, -122.437963715882, -122.406905517001, -122.457046421328, -122.400940442729, -122.398125294929, -122.410168130607, -122.394088029196, -122.394088029196, -122.394088029196, -122.401406031203, -122.469133479485, -122.424119303011, -122.467751913309, -122.475364749375, -122.444497878056, -122.433057016092, -122.408459771589, -122.407422670904, -122.482739593042, -122.449646518148, -122.470883133396, -122.43569818376, -122.480878642885, -122.413511164299, -122.413511164299, -122.413511164299, -122.413511164299, -122.413511164299, -122.413511164299, -122.493360555617, -122.493360555617, -122.493360555617, -122.469079802909, -122.485322486381, -122.475343512063, -122.428031698507, -122.394102782159, -122.443568296544, -122.446132039887, -122.389097971058, -122.401288263137, -122.412096319976, -122.411993900802, -122.433647093193, -122.397043037099, -122.401632108689, -122.423867038903, -122.419398172355, -122.398332406084, -122.398332406084, -122.398332406084, -122.37665780195, -122.430616411758, -122.430616411758, -122.430616411758, -122.430616411758, -122.430616411758, -122.427015292923, -122.395443418843, -122.397347692879, -122.425155918711, -122.406763846945, -122.446216764268, -122.425022139195, -122.425022139195, -122.444354304754, -122.403748970977, -122.389688346933, -122.44911337449, -122.429710561899, -122.448345543092, -122.47809367844, -122.400628182318, -122.399577725855, -122.399577725855, -122.404042172352, -122.408890462809, -122.400654590863, -122.478999483548, -122.387269130366, -122.411750757765, -122.40149717717, -122.461721356394, -122.478744838067, -122.454095219418, -122.461937448457, -122.41102889101, -122.482749852125, -122.482749852125,
-			-122.482749852125].sample,
-	rickshaw_server_ts: Time.now + i.seconds
-	});
-end
+timeslot1.save!;
+timeslot2.save!;
+timeslot3.save!;

@@ -29,10 +29,10 @@ ActiveRecord::Schema.define(:version => 20140108195400) do
 
   create_table "locations", :force => true do |t|
     t.integer  "driver_id"
-    t.decimal  "lat",        :precision => 10, :scale => 6
-    t.decimal  "lng",        :precision => 10, :scale => 6
-    t.datetime "created_at",                                :null => false
-    t.datetime "updated_at",                                :null => false
+    t.decimal  "lat",         :precision => 10, :scale => 6
+    t.decimal  "lng",         :precision => 10, :scale => 6
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
   end
 
   create_table "stop_requests", :force => true do |t|

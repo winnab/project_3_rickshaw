@@ -1,3 +1,7 @@
+.done{
+  opacity: 0.60;
+}
+
 #left-nav:hover{
   cursor: default;
 }
