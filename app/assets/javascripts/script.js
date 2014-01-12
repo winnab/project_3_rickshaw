@@ -6,7 +6,6 @@ var stop_markers = [];
 var displayed_driver;
 var directionsService = new google.maps.DirectionsService();
 var directionsDisplay = new google.maps.DirectionsRenderer({suppressMarkers: false});
-var data;
 
 function main(){
   var refreshPeriod = 1000;
@@ -38,14 +37,18 @@ function getData(){
 
 function normalizeData(data){
   normData = $.each(data.drivers, function(index, driver){
+    driver.is_driving = driver.locations.length  >= 1;
+    driver.has_stops  = driver.stops.length  >= 1;
+    driver.is_working = (driver.is_working == true && driver.has_stops == true)
+
     $.each(driver.stops, function(index, stop){
-        stop.index = index + 1;
-        stop.is_pickup 	  = stop.stop_type 	== 'pickup';
-        stop.is_due 		  = stop.job_status == null;
-        stop.is_done 		  = stop.job_status == 'done_ok';
-        stop.is_overdue   = stop.job_status == 'overdue';
-        stop.is_done_late = stop.job_status == 'done_late';
-        stop.is_done_late = stop.job_status == 'missed';
+      stop.index = index + 1;
+      stop.is_pickup 	  = stop.stop_type 	== 'pickup';
+      stop.is_due 		  = stop.job_status == null;
+      stop.is_done 		  = stop.job_status == 'done_ok';
+      stop.is_overdue   = stop.job_status == 'overdue';
+      stop.is_done_late = stop.job_status == 'done_late';
+      stop.is_missed    = stop.job_status == 'missed';
     })
   })
   return normData
@@ -56,6 +59,7 @@ function handleData(data){
   renderDriversList(data);
   renderDriverCurrLocMap(data);
 }
+
 
 function renderDriversList(data){
   $("#active-drivers, #inactive-drivers").html("");
@@ -80,70 +84,70 @@ function renderDriversList(data){
 
 function renderDriversNamesList(index, driver){
 	var stops = driver.stops
-	var container = stops.length > 0 ? "#active-drivers" : "#inactive-drivers"
+	var container = driver.has_stops ? "#active-drivers" : "#inactive-drivers"
 	var source = $("#driver_route").html(); 
 	var template = Handlebars.compile(source);
 	$(container).append(template(driver));
 }
 
 function renderDriverStopsList(driver) {
-	var source = $("#driver_stops").html(); 
+  var source = $("#driver_stops").html(); 
 	var template = Handlebars.compile(source);
 	$.each(driver.stops, function(index, stop){
-		$("#driver_" + stop.driver_id + "_stop_" + index).append(template(stop));
+		$("#driver_" + stop.driver_id + "_box").append(template(stop));
 	});
 }
 
-// function getStopStatusIcon(index, stop){
-//   switch(stop.job_status){
-//     case null:
-//       // to do
-//       var stop_image = {
-//         url: 'http://goo.gl/cJjBaI',
-//         size: new google.maps.Size(30, 30),
-//         origin: new google.maps.Point(30,0),
-//         anchor: new google.maps.Point(0, 45)
-//       };
-//       return stop_image;
-//       break;
-//     case "done_ok":
-//       // done
-//       var stop_image = {
-//         url: 'http://goo.gl/cJjBaI',
-//         size: new google.maps.Size(30, 30),
-//         origin: new google.maps.Point(60,0),
-//         anchor: new google.maps.Point(0, 60)
-//       }
-//       return stop_image;
-//       break;
-//     case "overdue":
-//       // overdue
-//       var stop_image = {
-//         url: 'http://goo.gl/cJjBaI',
-//         size: new google.maps.Size(90, 30),
-//         origin: new google.maps.Point(0,0),
-//         anchor: new google.maps.Point(0, 75)
-//       }
-//       return stop_image;
-//       break;
-//     default:
-//       var image = null 
-//       break;
-//     }
-//   return stop_image;
-// }
+function getStopStatusIcon(index, stop){
+  switch(stop.job_status){
+    case null:
+      // to do
+      var stop_image = {
+        url: 'http://goo.gl/cJjBaI',
+        size: new google.maps.Size(30, 30),
+        origin: new google.maps.Point(30,0),
+        anchor: new google.maps.Point(0, 45)
+      };
+      return stop_image;
+      break;
+    case "done_ok":
+      // done
+      var stop_image = {
+        url: 'http://goo.gl/cJjBaI',
+        size: new google.maps.Size(30, 30),
+        origin: new google.maps.Point(60,0),
+        anchor: new google.maps.Point(0, 60)
+      }
+      return stop_image;
+      break;
+    case "overdue":
+      // overdue
+      var stop_image = {
+        url: 'http://goo.gl/cJjBaI',
+        size: new google.maps.Size(90, 30),
+        origin: new google.maps.Point(0,0),
+        anchor: new google.maps.Point(0, 75)
+      }
+      return stop_image;
+      break;
+    default:
+      var image = null 
+      break;
+    }
+  return stop_image;
+}
 
 // * drivers locations  ********************************************
 
 function renderDriverCurrLocMap(data){
   clearDriverMarkers();
-  $.each(data.drivers, renderDriversCurrLocMap);
+  $.each(data.drivers, renderAllDriversCurrLocMap);
   // for fixed-seed data loop:
   driverLocIndex += 1;
 }
 
-function renderDriversCurrLocMap(index, driver){
-	if(driver.locations.length  >= 1){
+function renderAllDriversCurrLocMap(index, driver){
+	if(driver.is_driving){
   	var image = {
       url: 'http://goo.gl/cJjBaI',
       size: new google.maps.Size(30, 30),
@@ -165,37 +169,38 @@ function renderDriversCurrLocMap(index, driver){
 }
 
 // stops and routes locations ***************************************
-// function renderDriverStopsMap(driver){
-// 	clearMarkers();
-// 	for(var i = 0; i < driver.stops.length; i++){
-// 		if(i< driver.stops.length-1)
-// 		renderDirections(driver.stops[i].stop_address, driver.stops[i+1].stop_address)
-// 	}
-// 	$.each(driver.stops, renderStopsLocations);
-// }
+function renderDriverStopsMap(driver){
+	clearStopMarkers();
+  $.each(driver.stops, renderStopsLocations);
+	// for(var i = 0; i < driver.stops.length; i++){
+	// 	if(i< driver.stops.length-1)
+	// 	renderDirections(driver.stops[i].stop_address, driver.stops[i+1].stop_address)
+	// }
 
-// function renderStopsLocations(index, stop){
-//   var stopLatLng = new google.maps.LatLng(stop.latitude, stop.longitude);
-//   var stop_marker = new google.maps.Marker({
-//       position: stopLatLng,
-//       map: map,
-//       title: stop.stop_address,
-//       icon: getStopStatusIcon(index, stop)
-//   });
-//   stop_markers.push(stop_marker);
-//   stopInfoWindow(map, stop_marker);
-//   extendBoundaries();
-// }
+}
 
-// function stopInfoWindow(map, stop_marker){
-// 	var contentString = 'test';
-//   var infowindow = new google.maps.InfoWindow({
-//       content: contentString
-//   });
-//   google.maps.event.addListener(stop_marker, 'click', function() {
-//     infowindow.open(map, stop_marker);
-//   });
-// }
+function renderStopsLocations(index, stop){
+  var stopLatLng = new google.maps.LatLng(stop.latitude, stop.longitude);
+  var stop_marker = new google.maps.Marker({
+      position: stopLatLng,
+      map: map,
+      title: stop.job_status + " " + stop.stop_contact_name + " " + stop.stop_address,
+      icon: getStopStatusIcon(index, stop)
+  });
+  stop_markers.push(stop_marker);
+  stopInfoWindow(map, stop_marker);
+  extendBoundaries();
+}
+
+function stopInfoWindow(map, stop_marker){
+	var contentString = stop_marker.title;
+  var infowindow = new google.maps.InfoWindow({
+      content: contentString
+  });
+  google.maps.event.addListener(stop_marker, 'click', function() {
+    infowindow.open(map, stop_marker);
+  });
+}
 
 
 // function renderDirections(start, end){
