@@ -10,7 +10,7 @@ namespace :rickshaw do
 			sleep_period = if ENV['SLEEP']
 				ENV['SLEEP'].to_i
 			else
-				3 # sleeps less than record request, playback will be faster than real-time
+				1 # sleeps less than record request, playback will be faster than real-time
 			end
 
 			num = if ENV['NUM']
@@ -30,15 +30,15 @@ namespace :rickshaw do
 			end
 
 			def stop_unique?(stop)
+				stop = stop
 				existing_stop = Stop.find_by_stop_key(stop.stop_key)
 				unique_stop = (existing_stop == nil) ?  true : false
 				if unique_stop
-					stop.save!
 					puts "unique key. new stop being saved...."
 				else
+					existing_stop.delete
+					stop.save
 					puts "existing key. updating existing stop...."
-					existing_stop.destroy
-					stop.save!
 				end
 			end
 
@@ -75,10 +75,10 @@ namespace :rickshaw do
 			end
 			
 			num.times do |record|		
-				puts "////////////////////////////////////////////////////////////////////////////"
-				puts "// STARTING OVERALL LOOP //////////////////////////////////////////////////"
-				puts "///////////////////////////////////////////////////////////////////////////"
-    		sleep sleep_period
+				# puts "////////////////////////////////////////////////////////////////////////////"
+				# puts "// STARTING OVERALL LOOP //////////////////////////////////////////////////"
+				# puts "///////////////////////////////////////////////////////////////////////////"
+    # 		sleep sleep_period
     		
     		# init loop
     		load "#{Rails.root}/db/seeds.rb"
@@ -99,7 +99,7 @@ namespace :rickshaw do
 		  		  puts "-------------------------------------------------------|"
 
     	  	 	timeslot.stop_requests.find_each do |record|
-							sleep sleep_period
+							# sleep sleep_period
 							puts "-----"
 							puts "processing new stop_request :::::::::::::::::::::::"
 							stop = Stop.new(
@@ -112,14 +112,12 @@ namespace :rickshaw do
 								scheduled_datetime: Time.at(record.scheduled_time).to_datetime
 							)
 							if stop.valid?
-								new_stop_key(stop)
 								stop_statuses(record, stop)
+								new_stop_key(stop)
+								puts stop
+								stop.save! 
+								puts "errors? #{stop.errors.full_messages}"
 							end
-							# latitude = stop.latitude
-							# longitude = stop.longitude
-							# stop.has_coordinates? latitude, longitude
-							stop.save! 
-							puts "errors? #{stop.errors.full_messages}"
 	    			end
 
 		  		  puts ""
@@ -144,6 +142,8 @@ namespace :rickshaw do
 	    puts "#{Timeslot.count} Timeslots"
 	    puts "#{Location.count} Locations"
 	    puts "#{Stop.count} Stops"
+	    puts "#{Stop.where(job_status: nil).count} stops to complete."
+	    puts "#{Stop.where(job_status: "done_ok").count} stops done_ok."
 	    puts "#{Driver.count} Drivers"	
   	end
 	end
