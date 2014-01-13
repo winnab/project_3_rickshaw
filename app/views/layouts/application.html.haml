@@ -13,31 +13,30 @@
   %body
     / driver template
     %script#driver_route{type: "text/x-handlebars-template"}
-      :plain
-        <div id='driver_{{id}}_box' class="driver-name-box">
-            <h2 class="active-driver-name" data-id="{{id}}">
+      :plain      
+        <div class='driver-info-container row'>
+          <div id='driver_{{id}}_box' class="driver-name-box">
+              <h2 id='driver_{{id}}_name' class="active-driver-name" data-id="{{id}}">
               {{username}}, 
-              <span class="small subtle-emphasis">
-                {{done_stops}} of {{stops.length}}
-              </span>
-            </h2> 
+              <span class="small subtle-emphasis">{{done_stops}} of {{stops.length}}</span>
+              </h2> 
+          </div>
+          <div id='driver_{{id}}_stops_container' class='stops-box'></div>
         </div>
     / stops template
     %script#driver_stops{type: "text/x-handlebars-template"}
-      :plain      
-          <div id='driver_{{stop.driver_id}}_stop_{{index}}' class='stops-box' >
-            <div class='row stop-details {{#if is_done}}done{{/if}}'>
-              <div class='col-one-of-five'>
-                <div class='route-icons stop-number'> {{index}} </div>
-                <div class='route-icons {{#if is_pickup}}pickup{{else}}dropoff{{/if}}'></div>
-                <div class='route-icons {{#if is_done}}checkmark{{/if}}'></div>
-              </div>
-              <div class='col-four-of-five'>
-                <div class='stop-text'>
-                  <h4>{{stop_contact_name}}</h4>
-                  <p class='subtle-emphasis'>{{stop_address}}</p>
-                  <p class='subtle-emphasis'>client: {{client_name}}{{#if human_time}}, sched: {{human_time}}{{/if}}</p>
-                </div>
+      :plain
+          <div id='stop_{{index}}' class='row stop-details' >
+            <div class='col-one-of-five'>
+              <div class='route-icons stop-number'> {{index}} </div>
+              <div class='route-icons {{#if is_pickup}}pickup{{else}}dropoff{{/if}}'></div>
+              <div class='route-icons {{#if is_done}}checkmark{{/if}}'></div>
+            </div>
+            <div class='col-four-of-five'>
+              <div class='stop-text'>
+                <h4>{{stop_contact_name}}</h4>
+                <p class='subtle-emphasis'>{{stop_address}}</p>
+                <p class='subtle-emphasis'>client: {{client_name}}{{#if human_time}}, sched: {{human_time}}{{/if}}</p>
               </div>
             </div>
           </div>

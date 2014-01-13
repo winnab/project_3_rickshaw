@@ -74,9 +74,10 @@ function renderDriversList(data){
   $('.driver-name-box').on("click", function(){
     $(this).addClass('selected');
     $(this).children('.active-driver-name').addClass('selected');
+    $(".stops-box").html("");
     clearStopMarkers();
     var id = parseInt($(this).attr('id').replace( /\D+/g, ''));
-    $("#driver_" + id + "_stops_container").show();
+    
     var driver = _.findWhere(data.drivers, {id: id});
     displayed_driver = driver;
     renderDriverStopsList(driver);
