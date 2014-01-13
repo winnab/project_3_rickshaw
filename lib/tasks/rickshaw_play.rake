@@ -6,7 +6,7 @@ namespace :rickshaw do
   	desc "simulation: converting rickshaw recorded data into real data for map interface"
   	
   	task :play => :environment do
-	    Time.zone = "UTC"
+
 			sleep_period = if ENV['SLEEP']
 				ENV['SLEEP'].to_i
 			else
@@ -19,13 +19,26 @@ namespace :rickshaw do
 				1	 
 			end
 
-			def stop_unique?(record, stop)
-				existing_stop = Stop.find_by_stop_key(record.stop_key)
+			def new_stop_key stop
+  			stop_time = stop.scheduled_datetime.strftime("%Y%m%d")
+  			other_values 	= (	stop.stop_contact_name + 
+				  								stop.stop_address + 
+				  								stop.client_name + 
+				  								stop.stop_type).parameterize.underscore
+				stop.stop_key 	= "#{stop_time}_#{other_values}"
+				stop_unique?(stop)
+			end
+
+			def stop_unique?(stop)
+				existing_stop = Stop.find_by_stop_key(stop.stop_key)
 				unique_stop = (existing_stop == nil) ?  true : false
 				if unique_stop
-					new_stop_key stop
+					stop.save!
+					puts "unique key. new stop being saved...."
 				else
-					replace_stop(existing_stop, stop)
+					puts "existing key. updating existing stop...."
+					existing_stop.destroy
+					stop.save!
 				end
 			end
 
@@ -42,24 +55,6 @@ namespace :rickshaw do
 					return driver.id
 				end
 				puts "driver is #{record.username}, id #{record.driver_id}"
-			end
-
-			def new_stop_key stop
-  			stop_time = stop.scheduled_datetime.strftime("%Y%m%d")
-  			other_values 	= (	stop.stop_contact_name + 
-				  								stop.stop_address + 
-				  								stop.client_name + 
-				  								stop.stop_type).parameterize.underscore
-				stop.stop_key 	= "#{stop_time}_#{other_values}"
-				stop.save!
-				puts "stop doesn't exist in system. new stop key #{stop.stop_key} created. stop saved."
-			end
-
-			def replace_stop(existing_stop, stop)
-				puts "stop exists in system. updating...."
-				existing_stop = stop
-				existing_stop.save! 
-				puts "saved. created_at #{stop.created_at}, updated_at #{stop.updated_at}. time now is #{Time.now}."
 			end
 
 			def stop_statuses(record, stop)
@@ -86,35 +81,23 @@ namespace :rickshaw do
     		sleep sleep_period
     		
     		# init loop
-    		Stop.destroy_all
-    		Location.destroy_all
+    		load "#{Rails.root}/db/seeds.rb"
 
 	    	# go through timestamps
 	    	Timeslot.all.each do |timeslot|
 	    		puts ""
-	    		puts "---------------------------------------------------------------------------"
-	    		puts "-- processing new timeslot ------------------------------------------------"
-	    		puts "---------------------------------------------------------------------------"
+	    		puts "---------------------------------------------------------------------------|"
+	    		puts "-- processing new timeslot ------------------------------------------------|"
+	    		puts "---------------------------------------------------------------------------|"
 
 	    		if ( timeslot.location_requests.empty? || timeslot.stop_requests.empty? )
 						puts "timeslot has 0 location_requests or stop requests. timeslot removed."
 						timeslot.destroy
-	    		else     	  	
-		  		  puts "** timeslot locations *****************************************************"
-		  	  	timeslot.location_requests.find_each do |record|
-			  			sleep sleep_period
-			  			puts "-----"
-			  			puts "processing new location_request :::::::::::::::::::::::"
-		  				location = Location.new(
-		  					driver_id: convert_driver_id_to_id(record),
-		  					lat: record.lat,
-		  					lng: record.lng
-		  				)
-		  				location.save! if location.valid?
-		  				puts "errors? #{location.errors.full_messages}"
-		  			end
+	    		else     	  			  	
+		  		  puts ""
+		  		  puts "-- processing timeslot stops --------------------------|"
+		  		  puts "-------------------------------------------------------|"
 
-		  		  puts "** timeslot stops *****************************************************"
     	  	 	timeslot.stop_requests.find_each do |record|
 							sleep sleep_period
 							puts "-----"
@@ -128,10 +111,8 @@ namespace :rickshaw do
 								rickshaw_foreign_id: record.foreign_id,
 								scheduled_datetime: Time.at(record.scheduled_time).to_datetime
 							)
-							driver_info_complete? record
-							convert_driver_id_to_id record 
 							if stop.valid?
-								stop_unique?(record, stop)
+								new_stop_key(stop)
 								stop_statuses(record, stop)
 							end
 							# latitude = stop.latitude
@@ -140,6 +121,23 @@ namespace :rickshaw do
 							stop.save! 
 							puts "errors? #{stop.errors.full_messages}"
 	    			end
+
+		  		  puts ""
+		  		  puts "-- processing timeslot locations ----------------------|"
+		  		  puts "-------------------------------------------------------|"
+
+		  	  	timeslot.location_requests.find_each do |record|
+			  			sleep sleep_period
+			  			puts "-----"
+			  			puts "processing new location_request :::::::::::::::::::::::"
+		  				location = Location.new(
+		  					driver_id: convert_driver_id_to_id(record),
+		  					lat: record.lat,
+		  					lng: record.lng
+		  				)
+		  				location.save! if location.valid?
+		  				puts "errors? #{location.errors.full_messages}"
+		  			end
 	    		end
 	    	end
 	    end
