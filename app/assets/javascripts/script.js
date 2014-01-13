@@ -1,17 +1,18 @@
 var map;
 var bounds;
 var driverLocIndex = 0;
-var markers = [];
-var stop_markers = [];
-var displayed_driver;
+var driverMarkers = [];
+var stopMarkers = [];
+var markers = $.merge(driverMarkers, stopMarkers);
+var displayedDriver;
 var directionsService = new google.maps.DirectionsService();
 var directionsDisplay = new google.maps.DirectionsRenderer({suppressMarkers: false});
 
 function main(){
-  var refreshPeriod = 400;
   initRoutesList();
   initMap();
   getData();
+  // var refreshPeriod = 400;
   // setInterval(getData, refreshPeriod)
 }
 
@@ -22,13 +23,27 @@ function initRoutesList(){
 
 function initMap(){
   var mapOptions = {
-    zoom: 15,
+    zoom: 12,
     center: new google.maps.LatLng(37.771947, -122.424438),
-  };
+    mapTypeControl: false,
+    panControl: true,
+    panControlOptions: {
+        position: google.maps.ControlPosition.RIGHT_BOTTOM
+    },
+    zoomControl: true,
+    zoomControlOptions: {
+        style: google.maps.ZoomControlStyle.SMALL,
+        position: google.maps.ControlPosition.TOP_RIGHT
+    },
+    scaleControl: true,
+    scaleControlOptions: {
+        position: google.maps.ControlPosition.TOP_RIGHT
+    }
+  } 
   bounds = new google.maps.LatLngBounds();
   map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
   // getMapIconImage(map, marker);
-  directionsDisplay.setMap(map);
+  // directionsDisplay.setMap(map);
 }
 
 function getData(){
@@ -60,30 +75,72 @@ function handleData(data){
   renderDriverCurrLocMap(data);
 }
 
+function handleButtons(data){
+  // $('#refresh').on("click", toggleDataLoop);
+  // $('#show-all-drivers').on("click", toggleShowAllDrivers);
+}
+
+function toggleDataLoop(){
+  //   if(refreshPeriod != 0){
+  //   setInterval(getData, refreshPeriod);
+  //   var refreshPeriod = 0
+  //   console.log(refreshPeriod);
+  // }else if(refreshPeriod == 400){
+  //   setInterval(getData, refreshPeriod);
+  //   var refreshPeriod = 500
+  // }else{
+  //   console.log("else" + refreshPeriod)
+  // }
+  // setInterval(getData, refreshPeriod)
+  // return refreshPeriod;
+}
+
+function toggleShowAllDrivers(data){
+  // $('.show-all-drivers').on("click",function(){
+  //   renderDriversList(data);
+  //   renderDriverCurrLocMap(data);
+  // })
+}
+
 
 function renderDriversList(data){
   $("#active-drivers, #inactive-drivers").html("");
-
   $.each(data.drivers, renderDriversNamesList)
-
-  // if(displayed_driver != undefined){
-  //   renderDriverStopsList(displayed_driver);
-  //   renderDriverStopsMap(displayed_driver);
-  // }
   
+  if(displayedDriver != undefined){
+    renderDriverStopsList(displayedDriver);
+    renderDriverStopsMap(displayedDriver);
+  }
+    
   $('.driver-name-box').on("click", function(){
-    $(this).addClass('selected');
-    $(this).children('.active-driver-name').addClass('selected');
-    $(".stops-box").html("");
+    $('.stops-box').hide(600);
     clearStopMarkers();
     var id = parseInt($(this).attr('id').replace( /\D+/g, ''));
-    
     var driver = _.findWhere(data.drivers, {id: id});
-    displayed_driver = driver;
+    displayedDriver = driver;
     renderDriverStopsList(driver);
     renderDriverStopsMap(driver);
-  });
+    });
+
+  // $('.driver-name-box').on("click", function(){
+  //   clearStopMarkers();
+  //   var id = parseInt($(this).attr('id').replace( /\D+/g, ''));
+  //   var driver = _.findWhere(data.drivers, {id: id});
+  //   if(driver.has_stops){
+  //     displayedDriver = driver;
+  //     $(this).addClass('selected');
+  //     $(this).children('.active-driver-name').addClass('selected');
+  //     renderDriverStopsList(driver);
+  //     renderDriverStopsMap(driver);
+  //   }
+  // });
 }
+
+// clearStopsList(){
+//   $('.driver-name-box').on("click", function(){
+
+//   }
+// }
 
 function renderDriversNamesList(index, driver){
 	var stops = driver.stops
@@ -94,6 +151,7 @@ function renderDriversNamesList(index, driver){
 }
 
 function renderDriverStopsList(driver) {
+  $(".stops-box").html("")
   var source = $("#driver_stops").html(); 
 	var template = Handlebars.compile(source);
 	$.each(driver.stops, function(index, stop){
@@ -144,8 +202,8 @@ function getStopStatusIcon(index, stop){
 
 function renderDriverCurrLocMap(data){
   clearDriverMarkers();
-  driving_drivers = _.where(data.drivers, {is_driving: true});
-  $.each(driving_drivers, renderAllDriversCurrLocMap);
+  drivingDrivers = _.where(data.drivers, {is_driving: true});
+  $.each(drivingDrivers, renderAllDriversCurrLocMap);
   // for fixed-seed data loop:
   driverLocIndex += 1;
 }
@@ -183,24 +241,24 @@ function renderDriverStopsMap(driver){
 
 function renderStopsLocations(index, stop){
   var stopLatLng = new google.maps.LatLng(stop.latitude, stop.longitude);
-  var stop_marker = new google.maps.Marker({
+  var stopMarker = new google.maps.Marker({
       position: stopLatLng,
       map: map,
       title: stop.job_status + " " + stop.stop_contact_name + " " + stop.stop_address,
       icon: getStopStatusIcon(index, stop)
   });
-  stop_markers.push(stop_marker);
-  stopInfoWindow(map, stop_marker);
+  stopMarkers.push(stopMarker);
+  stopInfoWindow(map, stopMarker);
   extendBoundaries();
 }
 
-function stopInfoWindow(map, stop_marker){
-	var contentString = stop_marker.title;
+function stopInfoWindow(map, stopMarker){
+	var contentString = stopMarker.title;
   var infowindow = new google.maps.InfoWindow({
       content: contentString
   });
-  google.maps.event.addListener(stop_marker, 'click', function() {
-    infowindow.open(map, stop_marker);
+  google.maps.event.addListener(stopMarker, 'click', function() {
+    infowindow.open(map, stopMarker);
   });
 }
 
@@ -236,7 +294,7 @@ function clearDriverMarkers() {
 }
 
 function clearStopMarkers() { 
-	setAllMap(null, stop_markers); 
+	setAllMap(null, stopMarkers); 
 }
 
 // // Shows any markers currently in the array.
