@@ -4,4 +4,8 @@ class LocationSerializer < ActiveModel::Serializer
   def rickshaw_server_ts
   	object.created_at
   end
+
+  def driver
+  	driver.username
+  end
 end

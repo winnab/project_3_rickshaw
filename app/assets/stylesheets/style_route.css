@@ -83,6 +83,10 @@
   background-image: url('refresh.png');
 }
 
+.refresh .enabled{
+  background-image: url('refresh_hover.png');
+}
+
 .refresh:hover{
   background-image: url('refresh_hover.png');
 }
