@@ -12,8 +12,8 @@ function main(){
   initRoutesList();
   initMap();
   getData();
-  var refreshPeriod = 2000;
-  setInterval(getData, refreshPeriod)
+  // var refreshPeriod = 1000;
+  // setInterval(getData, refreshPeriod)
 }
 
 function initRoutesList(){
@@ -119,9 +119,9 @@ function renderDriversList(data){
     var id = parseInt($(this).attr('id').replace( /\D+/g, ''));
     var driver = _.findWhere(data.drivers, {id: id});
     if(driver.has_stops){
-      displayedDriver = driver;
       $(this).addClass('selected');
       $(this).children('.active-driver-name').addClass('selected');
+      displayedDriver = driver;
       renderDriverStopsList(driver);
       renderDriverStopsMap(driver);
     }
