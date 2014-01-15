@@ -12,8 +12,8 @@ function main(){
   initRoutesList();
   initMap();
   getData();
-  // var refreshPeriod = 1000;
-  // setInterval(getData, refreshPeriod)
+  var refreshPeriod = 1000;
+  setInterval(getData, refreshPeriod)
 }
 
 function initRoutesList(){
@@ -214,15 +214,16 @@ function getStopStatusIcon(index, stop){
 // * drivers locations  ********************************************
 
 function renderDriverCurrLocMap(data){
-  clearDriverMarkers();
+
   drivingDrivers = _.where(data.drivers, {is_driving: true})
   $.each(drivingDrivers, renderDriversCurrLocMap);
   driverLocIndex += 1;
 }
 
 function renderDriversCurrLocMap(index, driver){
+  clearDriverMarkers();
   if( driver.locations.length > driverLocIndex ){
-    console.log("index in if" + driverLocIndex)
+    console.log("index in if " + driverLocIndex)
     var location = driver.locations[driverLocIndex];
     var latLng = new google.maps.LatLng(location.lat, location.lng);
     var driverMarker = new google.maps.Marker({
@@ -245,9 +246,6 @@ function renderDriversCurrLocMap(index, driver){
       icon: getDriverIcon(index, driver),
       zIndex: 2
     });
-    var idleDrivers = [];
-    idleDrivers.push(driver);
-    // driverLocIndex = 0 if (idleDrivers.length == drivingDrivers.length)
   }
 }
 
