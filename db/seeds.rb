@@ -9,7 +9,6 @@ Timeslot.destroy_all;
 
 Driver.create!(username: "gautam");
 Driver.create!(username: "divya");
-Driver.create!(username: "john");
 Driver.create!(username: "wale");
 
 stop20140109_1_nitin_shantharam850_jones_st_san_franciscoswapboxdropoff = StopRequest.new(
@@ -22,7 +21,7 @@ stop20140109_1_nitin_shantharam850_jones_st_san_franciscoswapboxdropoff = StopRe
 	scheduled_status: nil,
 	job_status: nil,
 	stop_type: "dropoff",
-	username: "john",
+	username: "wale",
 	driver_id: nil);
 
 stop20140110_1_kathykupinska_gmail_com1439_lawton_stprimpickup = StopRequest.new(
@@ -35,7 +34,7 @@ stop20140110_1_kathykupinska_gmail_com1439_lawton_stprimpickup = StopRequest.new
 	scheduled_status: nil,
 	job_status: nil,
 	stop_type: "pickup",
-	username: "john",
+	username: "wale",
 	driver_id: nil);
 
 stop20140110_1_chelsea_grate_gmail_com1260_clay_street_san_francisco_ca_united_statesprimdropoff = StopRequest.new(
@@ -74,7 +73,7 @@ stop20140110_1_jwalter_sleeptrain_com3251_20th_avenue_space_101_san_francisco_ca
 	scheduled_status: nil,
 	job_status: nil,
 	stop_type: "pickup",
-	username: "john",
+	username: "wale",
 	driver_id: nil);
 
 stop20140110_1_richcarla_gmail_com101_27th_street_san_francisco_ca_united_statesprimdropoff = StopRequest.new(
@@ -87,7 +86,7 @@ stop20140110_1_richcarla_gmail_com101_27th_street_san_francisco_ca_united_states
 	scheduled_status: nil,
 	job_status: nil,
 	stop_type: "dropoff",
-	username: "john",
+	username: "wale",
 	driver_id: nil);
 
 stop20140109_1_cfraher7_gmail_com1260_golden_gate_avenue_san_francisco_caprimpickup = StopRequest.new(
@@ -139,7 +138,7 @@ stop20140110_2_jwalter_sleeptrain_com3251_20th_avenue_space_101_san_francisco_ca
 	scheduled_status: nil,
 	job_status: nil,
 	stop_type: "pickup",
-	username: "john",
+	username: "wale",
 	driver_id: nil);
 
 stop20140110_2_richcarla_gmail_com101_27th_street_san_francisco_ca_united_statesprimdropoff = StopRequest.new(
@@ -152,7 +151,7 @@ stop20140110_2_richcarla_gmail_com101_27th_street_san_francisco_ca_united_states
 	scheduled_status: nil,
 	job_status: nil,
 	stop_type: "dropoff",
-	username: "john",
+	username: "wale",
 	driver_id: nil);
 
 stop20140109_2_cfraher7_gmail_com1260_golden_gate_avenue_san_francisco_caprimpickup = StopRequest.new(
@@ -178,7 +177,7 @@ stop20140110_2_bradleybuda_gmail_com144_parnassus_avenue_apt_10_san_francisco_ca
 	scheduled_status: nil,
 	job_status: nil,
 	stop_type: "dropoff",
-	username: "john",
+	username: "wale",
 	driver_id: nil);
 
 stop20140109_2_truebe_gmail_com925_guerrero_street_san_francisco_caprimpickup = StopRequest.new(
@@ -204,7 +203,7 @@ stop20140109_2_nitin_shantharam850_jones_st_san_franciscoswapboxdropoff = StopRe
 	scheduled_status: nil,
 	job_status: nil,
 	stop_type: "dropoff",
-	username: "john",
+	username: "wale",
 	driver_id: nil);
 
 stop20140110_3_richcarla_gmail_com101_27th_street_san_francisco_ca_united_statesprimdropoff = StopRequest.new(
@@ -217,7 +216,7 @@ stop20140110_3_richcarla_gmail_com101_27th_street_san_francisco_ca_united_states
 	scheduled_status: nil,
 	job_status: nil,
 	stop_type: "dropoff",
-	username: "john",
+	username: "wale",
 	driver_id: nil);
 
 stop20140110_3_chelsea_grate_gmail_com1260_clay_street_san_francisco_ca_united_statesprimdropoff = StopRequest.new(
@@ -256,7 +255,7 @@ stop20140110_3_jwalter_sleeptrain_com3251_20th_avenue_space_101_san_francisco_ca
 	scheduled_status: nil,
 	job_status: nil,
 	stop_type: "pickup",
-	username: "john",
+	username: "wale",
 	driver_id: nil);
 
 stop20140109_3_cfraher7_gmail_com1260_golden_gate_avenue_san_francisco_caprimpickup = StopRequest.new(
@@ -295,7 +294,7 @@ stop20140110_3_bradleybuda_gmail_com144_parnassus_avenue_apt_10_san_francisco_ca
 	scheduled_status: nil,
 	job_status: nil,
 	stop_type: "dropoff",
-	username: "john",
+	username: "wale",
 	driver_id: nil);
 
 stop20140110_3_kathykupinska_gmail_com1439_lawton_stprimpickup = StopRequest.new(
@@ -308,7 +307,7 @@ stop20140110_3_kathykupinska_gmail_com1439_lawton_stprimpickup = StopRequest.new
 	scheduled_status: nil,
 	job_status: nil,
 	stop_type: "pickup",
-	username: "john",
+	username: "wale",
 	driver_id: nil);
 
 timeslot1 = Timeslot.new;

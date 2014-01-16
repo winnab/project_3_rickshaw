@@ -12,7 +12,7 @@ function main(){
   initRoutesList();
   initMap();
   getData();
-  var refreshPeriod = 1000;
+  var refreshPeriod = 500;
   setInterval(getData, refreshPeriod)
 }
 
@@ -24,8 +24,8 @@ function initRoutesList(){
 function initMap(){
   var mapOptions = {
     noClear: true,
-    zoom: 15,
-    center: new google.maps.LatLng(37.7892, -122.413764),
+    zoom: 13,
+    center: new google.maps.LatLng(37.7736582, -122.4472252),
     mapTypeControl: false,
     panControl: true,
     panControlOptions: {
@@ -59,9 +59,9 @@ function normalizeData(data){
 
     $.each(driver.stops, function(index, stop){
       stop.index = index + 1;
-      stop.is_pickup 	  = stop.stop_type 	== 'pickup';
-      stop.is_due 		  = stop.job_status ==  null;
-      stop.is_done 		  = stop.job_status == 'done_ok';
+      stop.is_pickup    = stop.stop_type  == 'pickup';
+      stop.is_due       = stop.job_status ==  null;
+      stop.is_done      = stop.job_status == 'done_ok';
       stop.is_overdue   = stop.job_status == 'overdue';
       stop.is_done_late = stop.job_status == 'done_late';
       stop.is_missed    = stop.job_status == 'missed';
@@ -129,50 +129,33 @@ function renderDriversList(data){
 }
 
 function renderDriversNamesList(index, driver){
-	$('.active-driver-name').removeClass('selected');
-	var container = driver.has_stops ? "#active-drivers" : "#inactive-drivers"
-	var source = $("#driver_route").html(); 
-	var template = Handlebars.compile(source);
-	$(container).append(template(driver));
+  $('.active-driver-name').removeClass('selected');
+  var container = driver.has_stops ? "#active-drivers" : "#inactive-drivers"
+  var source = $("#driver_route").html(); 
+  var template = Handlebars.compile(source);
+  $(container).append(template(driver));
 }
 
 function renderDriverStopsList(driver) {
   $(".stops-box").html("")
   var source = $("#driver_stops").html(); 
-	var template = Handlebars.compile(source);
-	$.each(driver.stops, function(index, stop){
-		$("#driver_" + stop.driver_id + "_stops_container").append(template(stop));
-	});
+  var template = Handlebars.compile(source);
+  $.each(driver.stops, function(index, stop){
+    $("#driver_" + stop.driver_id + "_stops_container").append(template(stop));
+  });
 }
 
 function indicateDone(){
   console.log("done");
 }
 
-function getDriverIcon(index, driver){
-  switch(driver.username){
-    case 'Wale':
-      var image = {
-        url: 'http://goo.gl/WbVMaQ',
-        size: new google.maps.Size(42, 45),
-        origin: new google.maps.Point(252, 0), 
-      };
-      return image;
-      break;
-    case 'John':
-      var image = {
-        url: 'http://goo.gl/WbVMaQ',
-        size: new google.maps.Size(42, 45),
-        origin: new google.maps.Point(294, 0), 
-      };
-      return image;
-      break;
-    default:
-      var image = null 
-      break;
-    }
-    return image;
-}
+// function getDriverIcon(index, driver){
+//       var image = {
+//         url: 'http://goo.gl/WbVMaQ',
+//         size: new google.maps.Size(42, 45),
+//         origin: new google.maps.Point(252, 0), 
+//       };
+// }
 
 
 function getStopStatusIcon(index, stop){
@@ -218,19 +201,26 @@ function renderDriverCurrLocMap(data){
   drivingDrivers = _.where(data.drivers, {is_driving: true})
   $.each(drivingDrivers, renderDriversCurrLocMap);
   driverLocIndex += 1;
+  console.log("driverLocIndex is: " + driverLocIndex)
 }
 
 function renderDriversCurrLocMap(index, driver){
   clearDriverMarkers();
+  console.log("length is: " + driver.locations.length)
   if( driver.locations.length > driverLocIndex ){
-    console.log("index in if " + driverLocIndex)
+    var image = {
+      url: 'http://goo.gl/WbVMaQ',
+      size: new google.maps.Size(42, 45),
+      origin: new google.maps.Point(252, 0), 
+    };
     var location = driver.locations[driverLocIndex];
+    console.log("location is: " + location.lat + " " + location.lng + " and index is " + index)
     var latLng = new google.maps.LatLng(location.lat, location.lng);
     var driverMarker = new google.maps.Marker({
       position: latLng,
       map: map,
       title: driver.username,
-      icon: getDriverIcon(index, driver),
+      icon: image,
       zIndex: 2
     });
     driverMarkers.push(driverMarker);
@@ -253,7 +243,7 @@ function renderDriversCurrLocMap(index, driver){
 
 // stops and routes locations ***************************************
 function renderDriverStopsMap(driver){
-	clearStopMarkers();
+  clearStopMarkers();
   $.each(driver.stops, renderStopsLocations);
 }
 
@@ -283,7 +273,7 @@ function driverInfoWindow(map, driverMarker){
 }
 
 function stopInfoWindow(map, stopMarker){
-	var contentString = stopMarker.title;
+  var contentString = stopMarker.title;
   var infowindow = new google.maps.InfoWindow({
       content: contentString
   });
@@ -302,28 +292,28 @@ function setAllMap(map, markers) {
 
 // function extendBoundaries(markers){
 //   $.each(markers,function(i, m){ 
-//   	bounds.extend(m.position) 
+//    bounds.extend(m.position) 
 //   })
 //   map.fitBounds(bounds);
 // }
 
 // // Removes the markers from the map, but keeps them in the array.
 function clearDriverMarkers() { 
-	setAllMap(null, markers); 
+  setAllMap(null, markers); 
 }
 
 function clearStopMarkers() { 
-	setAllMap(null, stopMarkers); 
+  setAllMap(null, stopMarkers); 
 }
 
 // // Shows any markers currently in the array.
 function showMarkers() { 
-	setAllMap(map); 
+  setAllMap(map); 
 }
 
 // // Deletes all markers in the array by removing references to them.
 function deleteMarkers() { 
-	clearMarkers(); markers = []; 
+  clearMarkers(); markers = []; 
 }
 
 $(document).ready(main)
